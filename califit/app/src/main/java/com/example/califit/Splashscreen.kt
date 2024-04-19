@@ -12,21 +12,21 @@ import java.util.TimerTask
 
 class SplashScreenFragment : Fragment(R.layout.fragment_splashscreen) {
 
-    private lateinit var appLogo: ImageView
+    private lateinit var califitLogo: ImageView
     private lateinit var flipValue: Timer
     private lateinit var flipAnimation: RotateAnimation
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        appLogo = view.findViewById(R.id.app_logo)
+        califitLogo = view.findViewById(R.id.califit_logo)
 
         flipValue = Timer()
         flipValue.schedule(object : TimerTask() {
             override fun run() {
                 navigateToWelcomePage()
             }
-        }, 100000) // Adjust the timing if needed
+        }, 5000) // Adjust the timing if needed
 
         setupRotationAnimation()
     }
@@ -40,7 +40,7 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splashscreen) {
         flipAnimation.duration = 2000
         flipAnimation.interpolator = LinearInterpolator()
         flipAnimation.repeatCount = Animation.INFINITE
-        appLogo.startAnimation(flipAnimation)
+        califitLogo.startAnimation(flipAnimation)
     }
 
     private fun navigateToWelcomePage() {
