@@ -46,10 +46,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="#820000"
-    android:paddingHorizontal="30dp"
-    android:paddingVertical="15dp"
-    android:text="Start Your Journey"
-    android:textColor="#FFF"
-    android:textSize="16sp" />
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="15dp"
+        android:text="Start Your Journey"
+        android:textColor="#FFF"
+        android:textSize="16sp" />
 
 </RelativeLayout>
