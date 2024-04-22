@@ -1,33 +1,25 @@
 package com.example.califit
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import java.util.Timer
-import java.util.TimerTask
+import androidx.navigation.fragment.findNavController
 
 class SplashScreenFragment : Fragment(R.layout.fragment_splashscreen) {
 
-    private lateinit var appLogo: ImageView
-    private lateinit var flipValue: Timer
+    private lateinit var califitLogo: ImageView
     private lateinit var flipAnimation: RotateAnimation
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        appLogo = view.findViewById(R.id.app_logo)
-
-        flipValue = Timer()
-        flipValue.schedule(object : TimerTask() {
-            override fun run() {
-                navigateToWelcomePage()
-            }
-        }, 100000) // Adjust the timing if needed
-
+        califitLogo = view.findViewById(R.id.califit_logo)
         setupRotationAnimation()
     }
 
@@ -39,14 +31,23 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splashscreen) {
         )
         flipAnimation.duration = 2000
         flipAnimation.interpolator = LinearInterpolator()
-        flipAnimation.repeatCount = Animation.INFINITE
-        appLogo.startAnimation(flipAnimation)
+        flipAnimation.repeatCount = 1 // Change to 1 so it doesn't repeat indefinitely
+        flipAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {}
+
+            override fun onAnimationEnd(animation: Animation?) {
+                // Ensure this runs on the main thread
+                Handler(Looper.getMainLooper()).post {
+                    navigateToWelcomePage()
+                }
+            }
+
+            override fun onAnimationRepeat(animation: Animation?) {}
+        })
+        califitLogo.startAnimation(flipAnimation)
     }
 
     private fun navigateToWelcomePage() {
-        // Implement navigation logic to WelcomePage
-        // For example:
-        // val action = SplashScreenFragmentDirections.actionSplashscreenToWelcomePage()
-        // findNavController().navigate(action)
+        findNavController().navigate(R.id.action_splashScreenFragment_to_welcomeFragment)
     }
 }
