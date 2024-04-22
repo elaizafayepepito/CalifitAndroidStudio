@@ -10,6 +10,7 @@ import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import android.util.Log
 
 class SplashScreenFragment : Fragment(R.layout.fragment_splashscreen) {
 
@@ -48,6 +49,8 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splashscreen) {
     }
 
     private fun navigateToWelcomePage() {
+        Log.d("Navigation", "Attempting to navigate to WelcomeFragment")
         findNavController().navigate(R.id.action_splashScreenFragment_to_welcomeFragment)
     }
+
 }
