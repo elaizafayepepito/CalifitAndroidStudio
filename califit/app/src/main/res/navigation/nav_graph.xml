@@ -27,7 +27,18 @@
         android:id="@+id/loginFragment"
         android:name="com.example.califit.LoginFragment"
         android:label="LoginFragment">
-    <!-- Add actions if needed -->
+        <action
+            android:id="@+id/action_nameRegistrationFragment_to_ageRegistrationFragment"
+            app:destination="@id/ageRegistrationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ageRegistrationFragment"
+        android:name="com.example.califit.AgeRegistrationFragment"
+        android:label="fragment_age_registration">
+    <action
+        android:id="@+id/action_ageRegistrationFragment_to_genderRegistrationFragment" />
+       <!-- app:destination="@id/genderRegistrationFragment" /> -->
     </fragment>
 
 
