@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph">
+
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.example.califit.SplashScreenFragment"
+        android:label="SplashScreen">
+        <action
+            android:id="@+id/action_splashScreenFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.califit.WelcomeFragment"
+        android:label="WelcomeFragment" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_userRegistrationFragment" />
+           <!--- app:destination="@id/userRegistrationFragment" /> -->
+    </fragment>
+
+    <!-- Actions to other fragments will go here -->
+</navigation>
