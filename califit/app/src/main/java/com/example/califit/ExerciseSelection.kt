@@ -17,8 +17,8 @@ class ExerciseSelection : AppCompatActivity() {
         exerciseCard2.setCardTitle("Inclined Pushup")
         exerciseCard2.setImageResource(R.drawable.inclined_pushup)
 
-        val exerciseCard2 = findViewById<ExerciseCardView>(R.id.exerciseCard2)
-        exerciseCard2.setCardTitle("Inclined Pushup")
-        exerciseCard2.setImageResource(R.drawable.sumo_squat)
+        val exerciseCard3 = findViewById<ExerciseCardView>(R.id.exerciseCard3)
+        exerciseCard3.setCardTitle("Sumo Squat")
+        exerciseCard3.setImageResource(R.drawable.sumo_squat)
     }
 }
