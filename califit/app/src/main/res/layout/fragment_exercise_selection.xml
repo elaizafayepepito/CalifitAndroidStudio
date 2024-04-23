@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Add your ExerciseCardView like any other view -->
+    <com.example.califit.ExerciseCardView
+        android:id="@+id/exerciseCard1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Add as many cards as needed -->
+    <com.example.califit.ExerciseCardView
+        android:id="@+id/exerciseCard2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exerciseCard1" />
+
+</FrameLayout>
