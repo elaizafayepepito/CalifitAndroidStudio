@@ -46,31 +46,35 @@
         <!-- Progress Section -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="113dp"
             android:background="#FFFFFF"
             android:padding="20dp">
+
             <TextView
                 android:id="@+id/progressTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Progress"
-                android:textSize="18sp"
-                android:textColor="#820000" />
+                android:textColor="#820000"
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/progressSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="This week"
-                android:textSize="14sp"
-                android:textColor="#820000" />
-            <Button
-                android:id="@+id/startButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Let's Start"
-                android:backgroundTint="#9F0202"
-                android:textColor="#FFFFFF" />
+                android:textColor="#820000"
+                android:textSize="14sp" />
+
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#9F0202"
+            android:text="Let's Start"
+            android:textColor="#FFFFFF" />
 
         <!-- Exercises Section -->
         <!-- Dynamically add ExerciseCards here -->
