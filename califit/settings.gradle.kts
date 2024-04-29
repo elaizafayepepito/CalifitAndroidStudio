@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "califit"
 include(":app")
+include(":openCV")
+

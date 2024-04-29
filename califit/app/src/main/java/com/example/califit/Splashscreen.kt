@@ -48,6 +48,6 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splashscreen) {
     }
 
     private fun navigateToWelcomePage() {
-        findNavController().navigate(R.id.action_splashScreenFragment_to_welcomeFragment)
+        (activity as? MainActivity)?.navigateToWelcomePage()
     }
 }
