@@ -5,17 +5,33 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        showSplashScreen() // Call this function to show the splash screen
+
+        showSplashScreen();
     }
 
     private fun showSplashScreen() {
-        // Use supportFragmentManager to begin a transaction, replace a container in your layout (here using android.R.id.content as the container) with your SplashScreenFragment
         supportFragmentManager.commit {
-            setReorderingAllowed(true) // Optimize the fragment transaction
-            replace(android.R.id.content, SplashScreenFragment()) // Replace the entire activity content with the splash screen
+            setReorderingAllowed(true)
+            replace(android.R.id.content, SplashScreenFragment())
+            // Add this line to add SplashScreenFragment to the back stack
+            addToBackStack(null)
+        }
+    }
+
+    // Add this function to navigate to the welcome page after the splash screen
+    fun navigateToWelcomePage() {
+        showWelcomePage()
+    }
+
+    private fun showWelcomePage() {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(android.R.id.content, WelcomeFragment())
+            // Don't add WelcomeFragment to the back stack
         }
     }
 }
