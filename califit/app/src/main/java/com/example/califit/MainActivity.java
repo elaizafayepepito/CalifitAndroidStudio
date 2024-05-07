@@ -12,7 +12,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Create an Intent to start SecondActivity
-        Intent intent = new Intent(this, TemporaryActivity.class);
+        //Intent intent = new Intent(this, TemporaryActivity.class);
+        Intent intent = new Intent(this, SplashscreenActivity.class);
         startActivity(intent);
     }
 }

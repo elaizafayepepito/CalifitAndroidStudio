@@ -29,5 +29,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".TemporaryActivity"></activity>
+        <activity android:name=".SplashscreenActivity"></activity>
     </application>
 </manifest>
