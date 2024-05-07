@@ -1,24 +1,32 @@
 package com.example.califit
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
-class ExerciseSelection : AppCompatActivity() {
+class ExerciseSelectionActivity : AppCompatActivity() {
+
+    private var selectedExercise: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_exercise)
+        setContentView(R.layout.activity_exercise_selection)
+    }
 
-        val exerciseCard1 = findViewById<ExerciseCardView>(R.id.exerciseCard1)
-        exerciseCard1.setCardTitle("Tabletop Crunch")
-        exerciseCard1.setImageResource(R.drawable.tabletop_crunch)
+    fun onSelectExercise(view: View) {
+        // This method will be called when any exercise is clicked
+        selectedExercise = when (view.id) {
+            R.id.exerciseTabletopCrunch -> "Tabletop Crunch"
+            R.id.exerciseInclinedPushup -> "Inclined Pushup"
+            R.id.exerciseSumoSquat -> "Sumo Squat"
+            else -> null
+        }
+    }
 
-        val exerciseCard2 = findViewById<ExerciseCardView>(R.id.exerciseCard2)
-        exerciseCard2.setCardTitle("Inclined Pushup")
-        exerciseCard2.setImageResource(R.drawable.inclined_pushup)
-
-        val exerciseCard3 = findViewById<ExerciseCardView>(R.id.exerciseCard3)
-        exerciseCard3.setCardTitle("Sumo Squat")
-        exerciseCard3.setImageResource(R.drawable.sumo_squat)
+    fun onProceed(view: View) {
+        // Handle proceed click here
+        if (selectedExercise != null) {
+            // Navigate to next screen or display selected exercise
+        }
     }
 }
