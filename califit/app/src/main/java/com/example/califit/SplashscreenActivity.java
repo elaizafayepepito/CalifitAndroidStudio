@@ -26,7 +26,7 @@ public class SplashscreenActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                startActivity(new Intent(SplashscreenActivity.this, WelcomeFragment.class));
+                startActivity(new Intent(SplashscreenActivity.this, WelcomeActivity.class));
                 finish();
             }
 

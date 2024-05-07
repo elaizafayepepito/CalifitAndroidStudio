@@ -50,6 +50,7 @@
         android:paddingVertical="15dp"
         android:text="Start Your Journey"
         android:textColor="#FFF"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:onClick="startJourney"/>
 
 </RelativeLayout>
