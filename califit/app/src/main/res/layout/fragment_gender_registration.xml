@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFD700"
+    android:padding="20dp">
+
+    <ImageView
+        android:id="@+id/imageViewGender"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/gender_pic"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What is your gender?"
+        android:textSize="24sp"
+        android:textColor="#ffffff"
+        android:layout_below="@id/imageViewGender"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/buttonMale"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:text="Male"
+        android:layout_below="@id/textViewTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="#ccc"/>
+
+    <Button
+        android:id="@+id/buttonFemale"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:text="Female"
+        android:layout_below="@id/buttonMale"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="#ccc"/>
+
+    <Button
+        android:id="@+id/buttonFinish"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:text="Finish"
+        android:background="#000000"
+        android:textColor="#ffffff"
+        android:layout_below="@id/buttonFemale"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+    <!-- Optionally add a TextView for error messages -->
+    <TextView
+        android:id="@+id/textViewError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ff0000"
+        android:layout_below="@id/buttonFinish"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>

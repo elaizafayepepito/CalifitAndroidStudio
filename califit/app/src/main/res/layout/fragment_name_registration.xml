@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#820000">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/imageName"
+            android:src="@drawable/name_pic"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="What is your name?"
+            android:textAlignment="center"
+            android:textSize="45sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <EditText
+            android:id="@+id/editTextFirstName"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="First Name"
+            android:textColorHint="#ccc"
+            android:textAlignment="center"
+            android:inputType="textCapWords"
+            android:layout_marginVertical="10dp"/>
+
+        <EditText
+            android:id="@+id/editTextLastName"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="Last Name"
+            android:textColorHint="#ccc"
+            android:textAlignment="center"
+            android:inputType="textCapWords"
+            android:layout_marginVertical="10dp"/>
+
+        <!-- Include ErrorMessage TextView here if you want to display error messages -->
+
+        <Button
+            android:id="@+id/buttonNext"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:textColor="#FFFFFF"
+            android:background="@color/black"
+            android:layout_gravity="end"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"/>
+
+    </LinearLayout>
+</ScrollView>
