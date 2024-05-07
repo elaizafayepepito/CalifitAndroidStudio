@@ -50,6 +50,14 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.camera.camera.core)
+    implementation(libs.androidx.camera.camera.camera2)
+    implementation(libs.androidx.camera.camera.lifecycle)
+    implementation(libs.androidx.camera.camera.video)
+    implementation(libs.androidx.camera.camera.view)
+    implementation(libs.androidx.camera.camera.extensions)
+    implementation(libs.com.google.android.material)
+    implementation(libs.com.google.mlkit.pose.detection)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -65,6 +73,7 @@ dependencies {
     implementation(project(":openCV"))
     implementation(libs.core)
     implementation(libs.pose.detection.common)
+    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
