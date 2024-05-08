@@ -34,5 +34,6 @@
         <activity android:name=".ExerciseSelectionActivity"></activity>
         <activity android:name=".SumoSquatActivity"></activity>
         <activity android:name=".TableTopCrunchActivity"></activity>
+        <activity android:name=".InclinedPushupActivity"></activity>
     </application>
 </manifest>
