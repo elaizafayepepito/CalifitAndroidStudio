@@ -59,7 +59,7 @@ public class ExerciseSelectionActivity extends AppCompatActivity {
 
     public void onProceed() {
         if (exerciseType.equals("Tabletop Crunch")) {
-            startActivity(new Intent(ExerciseSelectionActivity.this, TemporaryActivity.class));
+            startActivity(new Intent(ExerciseSelectionActivity.this, TableTopCrunchActivity.class));
         } else if (exerciseType.equals("Inclined Pushup")) {
             startActivity(new Intent(ExerciseSelectionActivity.this, TemporaryActivity.class));
         } else if (exerciseType.equals("Sumo Squat")) {
