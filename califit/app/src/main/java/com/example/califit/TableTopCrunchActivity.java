@@ -1,6 +1,5 @@
 package com.example.califit;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -79,7 +78,6 @@ public class TableTopCrunchActivity extends AppCompatActivity {
 
     MediaPlayer mediaPlayer;
 
-    @SuppressLint("MissingInflatedId")
     @ExperimentalGetImage
     @Override
     protected void onCreate(Bundle savedInstanceState) {
