@@ -31,5 +31,7 @@
         <activity android:name=".TemporaryActivity"></activity>
         <activity android:name=".SplashscreenActivity"></activity>
         <activity android:name=".WelcomeActivity"></activity>
+        <activity android:name=".ExerciseSelectionActivity"></activity>
+        <activity android:name=".SumoSquatActivity"></activity>
     </application>
 </manifest>

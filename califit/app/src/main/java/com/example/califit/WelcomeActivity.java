@@ -24,7 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void startJourney() {
-        Intent intent = new Intent(this, TemporaryActivity.class);
+        Intent intent = new Intent(this, ExerciseSelectionActivity.class);
         startActivity(intent);
     }
 }

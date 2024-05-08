@@ -120,6 +120,8 @@
             android:background="#000000"
             android:textColor="#FFFFFF"
             android:layout_marginTop="30dp"
+            android:clickable="true"
+            android:focusable="true"
             android:onClick="onProceed"/>
 
     </LinearLayout>
