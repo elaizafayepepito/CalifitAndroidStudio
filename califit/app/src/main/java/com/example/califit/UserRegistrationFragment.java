@@ -28,9 +28,17 @@ public class UserRegistrationFragment extends AppCompatActivity {
             }
         });
 
-        // Find the TextView and make part of the text clickable
         TextView textViewLogin = findViewById(R.id.textViewLogin);
         makePartOfTextClickable(textViewLogin, "Already have an account? ", "Sign In");
+
+        // Setup for "Continue as Guest"
+        TextView textViewContinueAsGuest = findViewById(R.id.textViewGuest);
+        textViewContinueAsGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateAsGuest();
+            }
+        });
     }
 
     private void makePartOfTextClickable(TextView textView, String nonLinkText, String linkText) {
@@ -53,6 +61,13 @@ public class UserRegistrationFragment extends AppCompatActivity {
         spannableString.setSpan(clickableSpan, nonLinkText.length(), (nonLinkText + linkText).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textView.setText(spannableString);
         textView.setMovementMethod(LinkMovementMethod.getInstance()); // This makes the link clickable
+    }
+
+
+
+    private void navigateAsGuest() {
+        Intent intent = new Intent(this, ExerciseSelectionActivity.class); // Assuming you have a GuestActivity
+        startActivity(intent);
     }
 
     private void navigateToLogin() {
