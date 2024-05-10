@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="25dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="25dp"
+        android:paddingHorizontal="10dp"
         android:gravity="center_horizontal">
 
         <RelativeLayout
@@ -40,47 +42,56 @@
 
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/maroon"
+            android:layout_marginTop="10dp"/>
 
-        <!-- Recent Workouts Section -->
+        <!-- Header Container -->
         <LinearLayout
+            android:id="@+id/headerContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="0dp"
+            android:layout_marginTop="10dp">
 
-            <!-- Greeting and Tagline -->
             <LinearLayout
-                android:id="@+id/textContainer"
-                android:layout_width="wrap_content"
+                android:id="@+id/helloTeknoyContainer"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingTop="45dp">
+                android:paddingLeft="10dp">
 
                 <TextView
-                    android:id="@+id/greetingText"
+                    android:id="@+id/greeting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hello, TEKNOY!"
+                    android:textSize="25sp"
                     android:textColor="#820000"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/taglineText"
+                    android:id="@+id/tagline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lets_workout_tagline"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:fontStyle="italic"/>
 
             </LinearLayout>
 
-            <!-- App Logo -->
             <ImageView
-                android:id="@+id/appLogo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_toRightOf="@id/textContainer"
-                android:src="@drawable/califit_logo" />
+                android:id="@+id/logo"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:src="@drawable/califit_logo_cropped"
+                android:layout_marginRight="0dp"/>
 
         </LinearLayout>
 
@@ -88,8 +99,7 @@
             android:id="@+id/recentWorkoutsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="20dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/sectionTitle"
@@ -116,7 +126,7 @@
                     <!-- Tabletop Crunch Workout -->
                     <LinearLayout
                         android:id="@+id/dbCrunchCard"
-                        android:layout_width="125dp"
+                        android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:background="@color/yellowgold"
@@ -128,7 +138,7 @@
                             android:id="@+id/tabletopCrunchWorkout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TABLETOP CRUNCH"
+                            android:text="TABLETOP\nCRUNCH"
                             android:textSize="10sp"
                             android:textColor="#820000"
                             android:textStyle="bold"
@@ -164,7 +174,7 @@
                     <!-- Inclined Pushup Workout -->
                     <LinearLayout
                         android:id="@+id/dbPushupCard"
-                        android:layout_width="125dp"
+                        android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:background="@color/white"
@@ -176,7 +186,7 @@
                             android:id="@+id/inclinedPushupWorkout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="INCLINED PUSHUP"
+                            android:text="INCLINED\nPUSHUP"
                             android:textSize="10sp"
                             android:textColor="#820000"
                             android:textStyle="bold"
@@ -212,7 +222,7 @@
                     <!-- Sumo Squat Workout -->
                     <LinearLayout
                         android:id="@+id/dbSquatCard"
-                        android:layout_width="125dp"
+                        android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:background="@color/yellowgold"
@@ -224,11 +234,10 @@
                             android:id="@+id/sumoSquatWorkout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="SUMO SQUATS"
+                            android:text="SUMO\nSQUATS"
                             android:textSize="10sp"
                             android:textColor="#820000"
                             android:textStyle="bold"
-                            android:layout_marginBottom="5dp"
                             android:textAlignment="center"/>
 
                         <TextView
@@ -292,7 +301,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="20dp"
             android:layout_marginTop="20dp">
 
             <TextView
@@ -341,7 +349,7 @@
                             android:id="@+id/crunchDemoDescription"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
-                            android:text="The Tabletop Crunch is an abdominal exercise that focuses on strengthening the core muscles, specifically the rectus abdominis."
+                            android:text="Tabletop Crunch is an abdominal exercise that focuses on strengthening the core muscles, specifically the rectus abdominis."
                             android:textColor="@color/maroon"
                             android:textSize="12sp"
                             android:textStyle="normal|italic"
@@ -411,7 +419,7 @@
                             android:id="@+id/pushupDemoDescription"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
-                            android:text="The Tabletop Crunch is an abdominal exercise that focuses on strengthening the core muscles, specifically the rectus abdominis."
+                            android:text="Inclined Push-Up is a variation of the classic push-up exercise that reduces the amount of body weight you need to lift."
                             android:textColor="@color/maroon"
                             android:textSize="12sp"
                             android:textStyle="normal|italic"
@@ -482,7 +490,7 @@
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:paddingTop="12dp"
-                            android:text="The Tabletop Crunch is an abdominal exercise that focuses on strengthening the core muscles, specifically the rectus abdominis."
+                            android:text="Sumo Squat is a powerful lower body exercise that targets the inner thighs, glutes, quadriceps, hips, and hamstrings."
                             android:textColor="@color/maroon"
                             android:textSize="12sp"
                             android:textStyle="normal|italic" />
