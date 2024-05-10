@@ -56,7 +56,19 @@
         android:text="Sign Up"
         android:background="#922B21"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp"
+        android:onClick="navigateToNameRegistration"/>
+
+    <TextView
+        android:id="@+id/textViewLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Sign In"
+        android:textColor="#820000"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:onClick="navigateToLogin"/>
 
     <!-- Additional views for social buttons and footer -->
 
