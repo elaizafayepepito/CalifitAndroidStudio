@@ -11,5 +11,6 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="logout">Logout</string>
+    <string name="lets_workout_tagline">Let\'s <b><font color="#800000">workout</font></b> to get some gains!</string>
 
 </resources>
