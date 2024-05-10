@@ -1,37 +1,69 @@
 package com.example.califit;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import android.widget.TextView;
 
-public class UserRegistrationFragment extends Fragment {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class UserRegistrationFragment extends AppCompatActivity {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_registration, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_user_registration);
 
-        Button signUpButton = view.findViewById(R.id.buttonSignUp);
-        signUpButton.setOnClickListener(new View.OnClickListener() {
+        Button buttonSignUp = findViewById(R.id.buttonSignUp);
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateToNameRegistration();
             }
         });
 
-        return view;
+        // Find the TextView and make part of the text clickable
+        TextView textViewLogin = findViewById(R.id.textViewLogin);
+        makePartOfTextClickable(textViewLogin, "Already have an account? ", "Sign In");
     }
 
+    private void makePartOfTextClickable(TextView textView, String nonLinkText, String linkText) {
+        SpannableString spannableString = new SpannableString(nonLinkText + linkText);
+
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                navigateToLogin();
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(true);  // Set to false if you don't want underline
+                ds.setColor(getResources().getColor(R.color.white)); // Define this color in your colors.xml
+            }
+        };
+
+        spannableString.setSpan(clickableSpan, nonLinkText.length(), (nonLinkText + linkText).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(spannableString);
+        textView.setMovementMethod(LinkMovementMethod.getInstance()); // This makes the link clickable
+    }
+
+    private void navigateToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class); // Correctly referring to LoginActivity
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+
     private void navigateToNameRegistration() {
-        NameRegistrationFragment nameRegistrationFragment = new NameRegistrationFragment();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, nameRegistrationFragment); // Assume 'fragment_container' is your FrameLayout ID in the Activity's layout
-        fragmentTransaction.addToBackStack(null); // This line is optional, it allows users to navigate back to the previous Fragment by pressing the back button
-        fragmentTransaction.commit();
+        Intent intent = new Intent(this, NameRegistrationFragment.class);
+        startActivity(intent);
     }
 }
