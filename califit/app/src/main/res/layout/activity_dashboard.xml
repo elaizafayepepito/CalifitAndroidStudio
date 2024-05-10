@@ -79,7 +79,6 @@
                 android:id="@+id/appLogo"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginLeft="0dp"
                 android:layout_toRightOf="@id/textContainer"
                 android:src="@drawable/califit_logo" />
 
@@ -90,8 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="20dp"
-            android:marginTop="20dp">
+            android:paddingHorizontal="20dp">
 
             <TextView
                 android:id="@+id/sectionTitle"
@@ -123,9 +121,6 @@
                         android:orientation="vertical"
                         android:background="@color/yellowgold"
                         android:padding="15dp"
-                        android:marginRight="10dp"
-                        android:marginTop="50dp"
-                        android:cornerRadius="10dp"
                         android:gravity="center_horizontal"
                         android:layout_marginHorizontal="5dp">
 
@@ -137,7 +132,6 @@
                             android:textSize="10sp"
                             android:textColor="#820000"
                             android:textStyle="bold"
-                            android:marginBottom="5dp"
                             android:textAlignment="center"/>
 
                         <TextView
@@ -175,9 +169,6 @@
                         android:orientation="vertical"
                         android:background="@color/white"
                         android:padding="15dp"
-                        android:marginRight="10dp"
-                        android:marginTop="50dp"
-                        android:cornerRadius="10dp"
                         android:gravity="center_horizontal"
                         android:layout_marginRight="5dp">
 
@@ -189,7 +180,6 @@
                             android:textSize="10sp"
                             android:textColor="#820000"
                             android:textStyle="bold"
-                            android:marginBottom="5dp"
                             android:textAlignment="center"/>
 
                         <TextView
@@ -227,9 +217,7 @@
                         android:orientation="vertical"
                         android:background="@color/yellowgold"
                         android:padding="15dp"
-                        android:marginRight="10dp"
-                        android:marginTop="50dp"
-                        android:cornerRadius="10dp"
+                        android:layout_marginRight="10dp"
                         android:gravity="center_horizontal">
 
                         <TextView
@@ -240,7 +228,7 @@
                             android:textSize="10sp"
                             android:textColor="#820000"
                             android:textStyle="bold"
-                            android:marginBottom="5dp"
+                            android:layout_marginBottom="5dp"
                             android:textAlignment="center"/>
 
                         <TextView
@@ -305,7 +293,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
-            android:marginTop="20dp">
+            android:layout_marginTop="20dp">
 
             <TextView
                 android:id="@+id/exerciseSectionTitle"

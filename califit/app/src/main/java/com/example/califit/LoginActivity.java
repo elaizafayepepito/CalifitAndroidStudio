@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToExerciseSelection();
+                navigateToDashboard();
             }
         });
 
@@ -60,8 +60,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void navigateToExerciseSelection() {
-        Intent intent = new Intent(this, ExerciseSelectionActivity.class);
+    private void navigateToDashboard() {
+        Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);
     }
 }

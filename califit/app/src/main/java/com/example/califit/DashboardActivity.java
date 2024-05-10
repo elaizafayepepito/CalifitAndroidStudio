@@ -7,26 +7,23 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class GenderRegistrationFragment extends AppCompatActivity {
-
-
-    @Override
+public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_gender_registration);
+        setContentView(R.layout.activity_dashboard);
 
-        Button buttonFinish = findViewById(R.id.buttonFinish);
+        Button buttonStartJourney = findViewById(R.id.startButton);
 
-        buttonFinish.setOnClickListener(new View.OnClickListener() {
+        buttonStartJourney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToDashboard();
+                navigateToExerciseSelection();
             }
         });
     }
 
-    private void navigateToDashboard() {
-        Intent intent = new Intent(this, DashboardActivity.class);
+    public void navigateToExerciseSelection() {
+        Intent intent = new Intent(this, ExerciseSelectionActivity.class);
         startActivity(intent);
     }
 }

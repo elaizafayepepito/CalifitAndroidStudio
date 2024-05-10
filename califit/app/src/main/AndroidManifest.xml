@@ -40,5 +40,6 @@
         <activity android:name=".SumoSquatActivity"></activity>
         <activity android:name=".TableTopCrunchActivity"></activity>
         <activity android:name=".InclinedPushupActivity"></activity>
+        <activity android:name=".DashboardActivity"></activity>
     </application>
 </manifest>
