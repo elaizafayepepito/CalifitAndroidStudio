@@ -11,21 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ExerciseSelectionActivity extends AppCompatActivity {
 
-    private String exerciseType = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_selection);
-
-        Button buttonProceed = findViewById(R.id.buttonProceed);
-
-        buttonProceed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onProceed();
-            }
-        });
 
         LinearLayout tabletopCrunchLayout = findViewById(R.id.exerciseTabletopCrunch);
         LinearLayout inclinedPushupLayout = findViewById(R.id.exerciseInclinedPushup);
@@ -34,38 +23,34 @@ public class ExerciseSelectionActivity extends AppCompatActivity {
         tabletopCrunchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSelectExercise("Tabletop Crunch");
+                proceedToTabletopCrunch();
             }
         });
 
         inclinedPushupLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSelectExercise("Inclined Pushup");
+                proceedToInclinedPushup();
             }
         });
 
         sumoSquatLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSelectExercise("Sumo Squat");
+                proceedToSumoSquat();
             }
         });
     }
 
-    public void onSelectExercise(String exerciseType) {
-        this.exerciseType = exerciseType;
+    public void proceedToTabletopCrunch() {
+        startActivity(new Intent(ExerciseSelectionActivity.this, TableTopCrunchActivity.class));
     }
 
-    public void onProceed() {
-        if (exerciseType.equals("Tabletop Crunch")) {
-            startActivity(new Intent(ExerciseSelectionActivity.this, TableTopCrunchActivity.class));
-        } else if (exerciseType.equals("Inclined Pushup")) {
-            startActivity(new Intent(ExerciseSelectionActivity.this, InclinedPushupActivity.class));
-        } else if (exerciseType.equals("Sumo Squat")) {
-            startActivity(new Intent(ExerciseSelectionActivity.this, SumoSquatActivity.class));
-        } else {
-            Log.d("NullExerciseType", "Please select an exercise.");
-        }
+    public void proceedToInclinedPushup() {
+        startActivity(new Intent(ExerciseSelectionActivity.this, InclinedPushupActivity.class));
+    }
+
+    public void proceedToSumoSquat() {
+        startActivity(new Intent(ExerciseSelectionActivity.this, SumoSquatActivity.class));
     }
 }

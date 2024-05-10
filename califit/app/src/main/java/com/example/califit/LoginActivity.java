@@ -13,24 +13,24 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class UserRegistrationFragment extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_user_registration);
+        setContentView(R.layout.fragment_login);
 
-        Button buttonSignUp = findViewById(R.id.buttonSignUp);
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+        Button buttonSignIn = findViewById(R.id.buttonSignIn);
+        buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToNameRegistration();
+                navigateToExerciseSelection();
             }
         });
 
-        // Find the TextView and make part of the text clickable
-        TextView textViewLogin = findViewById(R.id.textViewLogin);
-        makePartOfTextClickable(textViewLogin, "Already have an account? ", "Sign In");
+        // Add the TextView for signing up
+        TextView textViewSignup = findViewById(R.id.textViewSignup);
+        makePartOfTextClickable(textViewSignup, "Don't have an account? ", "Signup");
     }
 
     private void makePartOfTextClickable(TextView textView, String nonLinkText, String linkText) {
@@ -39,7 +39,7 @@ public class UserRegistrationFragment extends AppCompatActivity {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                navigateToLogin();
+                navigateToUserRegistration();
             }
 
             @Override
@@ -55,15 +55,13 @@ public class UserRegistrationFragment extends AppCompatActivity {
         textView.setMovementMethod(LinkMovementMethod.getInstance()); // This makes the link clickable
     }
 
-    private void navigateToLogin() {
-        Intent intent = new Intent(this, LoginActivity.class); // Correctly referring to LoginActivity
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    public void navigateToUserRegistration() {
+        Intent intent = new Intent(this, UserRegistrationFragment.class);
         startActivity(intent);
     }
 
-
-    private void navigateToNameRegistration() {
-        Intent intent = new Intent(this, NameRegistrationFragment.class);
+    private void navigateToExerciseSelection() {
+        Intent intent = new Intent(this, ExerciseSelectionActivity.class);
         startActivity(intent);
     }
 }

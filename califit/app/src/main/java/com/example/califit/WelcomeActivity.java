@@ -18,13 +18,13 @@ public class WelcomeActivity extends AppCompatActivity {
         buttonStartJourney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startJourney();
+                navigateToUserRegistration();
             }
         });
     }
 
-    public void startJourney() {
-        Intent intent = new Intent(this, ExerciseSelectionActivity.class);
+    public void navigateToUserRegistration() {
+        Intent intent = new Intent(this, UserRegistrationFragment.class);
         startActivity(intent);
     }
 }

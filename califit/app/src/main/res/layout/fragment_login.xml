@@ -54,6 +54,16 @@
             android:textColor="#FFFFFF"
             android:layout_marginTop="20dp"/>
 
+        <TextView
+            android:id="@+id/textViewSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? Signup"
+            android:textColor="#820000"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center"/>
+
         <!-- Insert more UI elements here if needed -->
 
     </LinearLayout>

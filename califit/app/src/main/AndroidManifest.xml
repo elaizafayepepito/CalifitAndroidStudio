@@ -30,7 +30,12 @@
         </activity>
         <activity android:name=".TemporaryActivity"></activity>
         <activity android:name=".SplashscreenActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
         <activity android:name=".WelcomeActivity"></activity>
+        <activity android:name=".UserRegistrationFragment"></activity>
+        <activity android:name=".NameRegistrationFragment"></activity>
+        <activity android:name=".AgeRegistrationFragment"></activity>
+        <activity android:name=".GenderRegistrationFragment"></activity>
         <activity android:name=".ExerciseSelectionActivity"></activity>
         <activity android:name=".SumoSquatActivity"></activity>
         <activity android:name=".TableTopCrunchActivity"></activity>
