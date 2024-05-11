@@ -41,5 +41,6 @@
         <activity android:name=".TableTopCrunchActivity"></activity>
         <activity android:name=".InclinedPushupActivity"></activity>
         <activity android:name=".DashboardActivity"></activity>
+        <activity android:name=".ProfileActivity">xxxxxxx</activity>
     </application>
 </manifest>
