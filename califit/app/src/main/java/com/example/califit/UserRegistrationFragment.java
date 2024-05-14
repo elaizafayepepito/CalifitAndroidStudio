@@ -74,7 +74,7 @@ public class UserRegistrationFragment extends AppCompatActivity {
 
 
     private void navigateAsGuest() {
-        Intent intent = new Intent(this, ExerciseSelectionActivity.class); // Assuming you have a GuestActivity
+        Intent intent = new Intent(this, GuestDashboardActivity.class); // Assuming you have a GuestActivity
         startActivity(intent);
     }
 
