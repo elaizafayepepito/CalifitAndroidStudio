@@ -9,10 +9,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class DashboardActivity extends AppCompatActivity {
+public class GuestDashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_dashboard_guest);
 
         Button buttonStartJourney = findViewById(R.id.startButton);
 
@@ -56,23 +56,11 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        TextView textViewEditProfile = findViewById(R.id.editProfile);
-        textViewEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToProfile();
-            }
-        });
-
     }
-
     public void navigateToExerciseSelection() {
         Intent intent = new Intent(this, ExerciseSelectionActivity.class);
         startActivity(intent);
     }
 
-    public void navigateToProfile() {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
-    }
 }
+

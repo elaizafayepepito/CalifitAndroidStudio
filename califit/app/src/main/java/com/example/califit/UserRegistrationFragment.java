@@ -3,12 +3,14 @@ package com.example.califit;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,9 +51,23 @@ public class UserRegistrationFragment extends AppCompatActivity {
             }
         });
 
-        // Find the TextView and make part of the text clickable
         TextView textViewLogin = findViewById(R.id.textViewLogin);
         makePartOfTextClickable(textViewLogin, "Already have an account? ", "Sign In");
+
+        // Setup for "Continue as Guest"
+        TextView textViewContinueAsGuest = findViewById(R.id.textViewGuest);
+        textViewContinueAsGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateAsGuest();
+            }
+        });
+        TextView textViewGuest = findViewById(R.id.textViewGuest);
+        String guestText = "Continue as Guest";
+        SpannableString content = new SpannableString(guestText);
+        content.setSpan(new UnderlineSpan(), 0, guestText.length(), 0);
+        textViewContinueAsGuest.setText(content);
+
     }
 
     private void makePartOfTextClickable(TextView textView, String nonLinkText, String linkText) {
@@ -74,6 +90,13 @@ public class UserRegistrationFragment extends AppCompatActivity {
         spannableString.setSpan(clickableSpan, nonLinkText.length(), (nonLinkText + linkText).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textView.setText(spannableString);
         textView.setMovementMethod(LinkMovementMethod.getInstance()); // This makes the link clickable
+    }
+
+
+
+    private void navigateAsGuest() {
+        Intent intent = new Intent(this, GuestDashboardActivity.class); // Assuming you have a GuestActivity
+        startActivity(intent);
     }
 
     private void navigateToLogin() {

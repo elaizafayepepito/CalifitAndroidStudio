@@ -69,6 +69,17 @@
         android:gravity="center"
         android:onClick="navigateToLogin"/>
 
+    <TextView
+        android:id="@+id/textViewGuest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue as Guest"
+        android:textColor="#1E1E1E"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"/>
+
+
     <!-- Additional views for social buttons and footer -->
 
 </LinearLayout>
