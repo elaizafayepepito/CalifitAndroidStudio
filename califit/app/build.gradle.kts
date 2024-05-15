@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.core)
     implementation(libs.pose.detection.common)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.volley)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
