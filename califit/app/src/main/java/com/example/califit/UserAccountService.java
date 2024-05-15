@@ -22,44 +22,6 @@ public class UserAccountService {
         requestQueue = Volley.newRequestQueue(context);
     }
 
-    /*public void createAccount(JSONObject accountData, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
-        String url = BASE_URL + "/create_account";
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
-                url,
-                accountData,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            // Extract message and account_id from the response JSON object
-                            String message = response.getString("message");
-                            String accountId = response.getString("account_id");
-
-                            // Log the success message and account_id
-                            Log.d("UserAccountService", "Account created successfully: " + message + ", Account ID: " + accountId);
-
-                            // Pass the entire response to the response listener
-                            responseListener.onResponse(response);
-                        } catch (Exception e) {
-                            Log.e("UserAccountService", "Error parsing account creation response: " + e.getMessage());
-                            // Notify the error listener
-                            errorListener.onErrorResponse(new VolleyError("Error parsing account creation response: " + e.getMessage()));
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Log the error message
-                        Log.e("UserAccountService", "Account creation error: " + error.getMessage());
-                        // Pass the error to the error listener
-                        errorListener.onErrorResponse(error);
-                    }
-                }
-        );
-        requestQueue.add(request);
-    }*/
     public void createAccount(JSONObject accountData, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         String url = BASE_URL + "/create_account";
         JsonObjectRequest request = new JsonObjectRequest(
