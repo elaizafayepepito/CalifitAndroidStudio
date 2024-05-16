@@ -17,6 +17,7 @@ camera = "1.3.3"
 constraintlayout = "2.1.4"
 material = "1.5.0"
 poseDetection = "18.0.0-beta3"
+volley = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -48,6 +49,7 @@ androidx-camera-camera-extensions = { group = "androidx.camera", name = "camera-
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 com-google-android-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 com-google-mlkit-pose-detection = { group = "com.google.mlkit", name = "pose-detection", version.ref = "poseDetection" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
