@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "418851949072",
+    "project_id": "califitdb",
+    "storage_bucket": "califitdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418851949072:android:80720cbdfa7ce6c2095895",
+        "android_client_info": {
+          "package_name": "com.example.califit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRgEj2t7t1grIU7GLEfh5EeHnZM01G0Io"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
