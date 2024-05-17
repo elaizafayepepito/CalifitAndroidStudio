@@ -3,13 +3,11 @@ package com.example.califit;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
@@ -17,12 +15,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-
-import org.json.JSONObject;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class UserRegistrationFragment extends AppCompatActivity {
 
@@ -31,12 +31,15 @@ public class UserRegistrationFragment extends AppCompatActivity {
     private EditText editTextPassword;
     private String id;
     private Button buttonSignUp;
+    DatabaseReference accountDbRef;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_user_registration);
+
+        accountDbRef = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Accounts");
 
         userAccountService = new UserAccountService(this);
 
@@ -47,7 +50,8 @@ public class UserRegistrationFragment extends AppCompatActivity {
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleSignUp();
+                //handleSignUp();
+                insertAccountData();
             }
         });
 
@@ -105,7 +109,7 @@ public class UserRegistrationFragment extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void handleSignUp() {
+    /*private void handleSignUp() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
@@ -157,11 +161,57 @@ public class UserRegistrationFragment extends AppCompatActivity {
 
         // Call the createAccount method of UserAccountService with the data and listeners
         userAccountService.createAccount(accountData, responseListener, errorListener);
-    }
+    }*/
 
     private void navigateToNameRegistration(String accountId) {
         Intent intent = new Intent(this, NameRegistrationFragment.class);
         intent.putExtra("account_id", accountId);
         startActivity(intent);
+    }
+
+    private void insertAccountData() {
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check if the email already exists in the database
+        accountDbRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Email already exists, show an error message
+                    Toast.makeText(UserRegistrationFragment.this, "Email already exists in the database", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Email does not exist, insert the data
+                    Accounts accounts = new Accounts(email, password);
+
+                    // Push the data to the database and attach a completion listener
+                    accountDbRef.push().setValue(accounts, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                            if (databaseError != null) {
+                                // Error occurred while inserting data
+                                Toast.makeText(UserRegistrationFragment.this, "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Data inserted successfully, get the key assigned to the newly created account
+                                String accountKey = databaseReference.getKey();
+                                navigateToNameRegistration(accountKey);
+                                Toast.makeText(UserRegistrationFragment.this, "Account data inserted! ID: " + accountKey, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle database error
+                Toast.makeText(UserRegistrationFragment.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,7 +30,7 @@ public class NameRegistrationFragment extends AppCompatActivity {
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
 
-        Button buttonNext = findViewById(R.id.buttonNext);
+        buttonNext = findViewById(R.id.buttonNext);
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,10 +41,17 @@ public class NameRegistrationFragment extends AppCompatActivity {
     }
 
     private void navigateToAgeRegistration() {
-        Intent intent = new Intent(this, AgeRegistrationFragment.class);
-        intent.putExtra("account_id", accountId);
-        intent.putExtra("firstname", editTextFirstName.getText().toString().trim());
-        intent.putExtra("lastname", editTextLastName.getText().toString().trim());
-        startActivity(intent);
+        String firstname = editTextFirstName.getText().toString().trim();
+        String lastname = editTextLastName.getText().toString().trim();
+
+        if (firstname.isEmpty() || lastname.isEmpty()) {
+            Toast.makeText(this, "Please enter firstname and lastname", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(this, AgeRegistrationFragment.class);
+            intent.putExtra("account_id", accountId);
+            intent.putExtra("firstname", firstname);
+            intent.putExtra("lastname", lastname);
+            startActivity(intent);
+        }
     }
 }

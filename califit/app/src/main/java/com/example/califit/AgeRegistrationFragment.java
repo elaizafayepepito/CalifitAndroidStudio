@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,11 +44,17 @@ public class AgeRegistrationFragment extends AppCompatActivity {
     }
 
     private void navigateToGenderRegistration() {
-        Intent intent = new Intent(this, GenderRegistrationFragment.class);
-        intent.putExtra("account_id", accountId);
-        intent.putExtra("firstname", firstname);
-        intent.putExtra("lastname", lastname);
-        intent.putExtra("age", editTextAge.getText().toString().trim());
-        startActivity(intent);
+        String age = editTextAge.getText().toString().trim();
+
+        if (age.isEmpty()) {
+            Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(this, GenderRegistrationFragment.class);
+            intent.putExtra("account_id", accountId);
+            intent.putExtra("firstname", firstname);
+            intent.putExtra("lastname", lastname);
+            intent.putExtra("age", age);
+            startActivity(intent);
+        }
     }
 }
