@@ -33,7 +33,7 @@
         android:layout_below="@id/textViewTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="#ccc"/>
+        android:background="@color/maroon"/>
 
     <Button
         android:id="@+id/buttonFemale"
@@ -43,7 +43,7 @@
         android:layout_below="@id/buttonMale"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:background="#ccc"/>
+        android:background="@color/maroon"/>
 
     <Button
         android:id="@+id/buttonFinish"
