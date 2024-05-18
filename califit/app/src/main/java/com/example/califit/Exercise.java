@@ -1,6 +1,7 @@
 package com.example.califit;
+import java.io.Serializable;
 
-public class Exercise {
+public class Exercise implements Serializable {
     private String userId;
     private int reps;
     private String date;
