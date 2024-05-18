@@ -25,6 +25,12 @@ public class DashboardActivity extends AppCompatActivity {
     private String accountId;
     private DatabaseReference usersDbRef;
     private DatabaseReference accountsDbRef;
+    private DatabaseReference squatsDbRef;
+    private DatabaseReference crunchesDbRef;
+    private DatabaseReference pushupsDbRef;
+    private TextView squatsTextView;
+    private TextView crunchesTextView;
+    private TextView pushupsTextView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +45,9 @@ public class DashboardActivity extends AppCompatActivity {
 
         usersDbRef = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Users");
         accountsDbRef = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Accounts");
+        squatsDbRef = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Squats");
+        crunchesDbRef = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Crunches");
+        pushupsDbRef = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Pushups");
 
         if (userId != null) {
             fetchUserDetailsById(userId);
@@ -47,6 +56,14 @@ public class DashboardActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No valid user ID or account ID provided", Toast.LENGTH_SHORT).show();
         }
+
+        squatsTextView = findViewById(R.id.squatProgress);
+        crunchesTextView = findViewById(R.id.crunchProgress);
+        pushupsTextView = findViewById(R.id.pushupProgress);
+
+        fetchExerciseData(squatsDbRef, squatsTextView);
+        fetchExerciseData(crunchesDbRef, crunchesTextView);
+        fetchExerciseData(pushupsDbRef, pushupsTextView);
 
         Button buttonStartJourney = findViewById(R.id.startButton);
 
@@ -219,4 +236,29 @@ public class DashboardActivity extends AppCompatActivity {
         return null;
     }
 
+    private void fetchExerciseData(DatabaseReference exerciseRef, final TextView textView) {
+        exerciseRef.orderByChild("userId").equalTo(userId).limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Get the latest exercise data
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Exercise exercise = snapshot.getValue(Exercise.class);
+                        if (exercise != null) {
+                            // Update the TextView with the latest exercise reps
+                            textView.setText(String.valueOf(exercise.getReps()));
+                        }
+                    }
+                } else {
+                    // If no data exists, set reps to 0
+                    textView.setText("0");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle onCancelled event
+            }
+        });
+    }
 }
