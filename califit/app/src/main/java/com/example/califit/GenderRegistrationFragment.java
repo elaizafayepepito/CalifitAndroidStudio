@@ -10,16 +10,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class GenderRegistrationFragment extends AppCompatActivity {
 
@@ -93,47 +88,9 @@ public class GenderRegistrationFragment extends AppCompatActivity {
         Log.d("GenderRegistration", "Selected gender: " + gender);
     }
 
-    private void createUser() {
-        try {
-            JSONObject userData = new JSONObject();
-            userData.put("accountId", accountId);
-            userData.put("firstname", firstname);
-            userData.put("lastname", lastname);
-            userData.put("age", Integer.parseInt(age));
-            userData.put("gender", gender);
-
-            userAccountService.createUser(userData, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        String message = response.getString("message");
-                        if (message.equals("User created successfully")) {
-                            Toast.makeText(GenderRegistrationFragment.this, message, Toast.LENGTH_LONG).show();
-                            navigateToDashboard();
-                        } else {
-                            Toast.makeText(GenderRegistrationFragment.this, message, Toast.LENGTH_LONG).show();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(GenderRegistrationFragment.this, "Error parsing response", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                    Toast.makeText(GenderRegistrationFragment.this, "Error creating user: " + error.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error creating user data", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void navigateToDashboard() {
+    private void navigateToDashboard(String userId) {
         Intent intent = new Intent(this, DashboardActivity.class);
+        intent.putExtra("user_id", userId);
         startActivity(intent);
     }
 
@@ -170,7 +127,7 @@ public class GenderRegistrationFragment extends AppCompatActivity {
                             } else {
                                 // Data inserted successfully, get the key assigned to the newly created account
                                 String userKey = databaseReference.getKey();
-                                navigateToDashboard();
+                                navigateToDashboard(userKey);
                                 Toast.makeText(GenderRegistrationFragment.this, "User data inserted! ID: " + userKey, Toast.LENGTH_SHORT).show();
                             }
                         }

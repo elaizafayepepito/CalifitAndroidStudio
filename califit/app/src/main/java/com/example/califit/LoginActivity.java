@@ -17,15 +17,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -87,62 +83,10 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void navigateToDashboard() {
+    private void navigateToDashboard(String accountId) {
         Intent intent = new Intent(this, DashboardActivity.class);
+        intent.putExtra("account_id", accountId);
         startActivity(intent);
-    }
-
-    private void handleLogin() {
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
-
-        JSONObject loginData = new JSONObject();
-        try {
-            loginData.put("email", email);
-            loginData.put("password", password);
-        } catch (Exception e) {
-            Log.e("LoginActivity", "Error creating login data: " + e.getMessage());
-            return;
-        }
-
-        // Define a response listener to handle the successful login response
-        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    // Parse the response JSON
-                    String message = response.getString("message");
-                    String accountId = response.getString("account_id");
-
-                    // Log the success message and account ID
-                    Log.d("LOGIN", "Login successful: " + message + ", Account ID: " + accountId);
-
-                    // Only navigate to the DashboardActivity if login is successful
-                    navigateToDashboard();
-
-                } catch (Exception e) {
-                    Log.e("LOGIN", "Error parsing login response: " + e.getMessage());
-                    showLoginErrorMessage("An error occurred while processing the login response.");
-                }
-            }
-        };
-
-        // Define an error listener to handle any login errors
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // Log the error message and show error message to user
-                Log.e("LOGIN", "Login error: " + error.getMessage());
-                showLoginErrorMessage("Incorrect email or password. Please try again.");
-            }
-        };
-
-        // Call the login method of UserAccountService with the data and listeners
-        userAccountService.login(loginData, responseListener, errorListener);
-    }
-
-    private void showLoginErrorMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void login() {
@@ -170,7 +114,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (account != null && account.getPassword().equals(password)) {
                                 // Correct password
                                 isPasswordCorrect = true;
-                                navigateToDashboard();
+                                String accountId = accountSnapshot.getKey();
+                                navigateToDashboard(accountId);
                                 Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                                 break;
                             }
