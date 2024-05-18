@@ -1,5 +1,6 @@
 package com.example.califit;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -110,6 +111,46 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
+        // Setup for "View tcProgress"
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView tcViewProgress = findViewById(R.id.tcViewProgress);
+        tcViewProgress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToTcLogs();
+            }
+        });
+
+        TextView ssViewProgress = findViewById(R.id.ssViewProgress);
+        ssViewProgress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToSsLogs();
+            }
+        });
+
+        TextView ipViewProgress = findViewById(R.id.ipViewProgress);
+        ipViewProgress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToIpLogs();
+            }
+        });
+    }
+
+    public void navigateToTcLogs() {
+        Intent intent = new Intent(this, TcList.class);
+        startActivity(intent);
+    }
+
+    public void navigateToSsLogs() {
+        Intent intent = new Intent(this, SsList.class);
+        intent.putExtra("user_id", userId);
+        startActivity(intent);
+    }
+
+    public void navigateToIpLogs() {
+        Intent intent = new Intent(this, IpList.class);
+        startActivity(intent);
     }
 
     public void navigateToExerciseSelection() {
