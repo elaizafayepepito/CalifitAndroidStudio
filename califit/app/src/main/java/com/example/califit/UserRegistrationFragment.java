@@ -29,6 +29,7 @@ public class UserRegistrationFragment extends AppCompatActivity {
     private UserAccountService userAccountService;
     private EditText editTextEmail;
     private EditText editTextPassword;
+    private EditText editTextConfirmPassword;
     private String id;
     private Button buttonSignUp;
     DatabaseReference accountDbRef;
@@ -45,6 +46,7 @@ public class UserRegistrationFragment extends AppCompatActivity {
 
         editTextEmail = findViewById(R.id.editTextEmailSignup);
         editTextPassword = findViewById(R.id.editTextPasswordSignup);
+        editTextConfirmPassword = findViewById(R.id.editTextConfirmPasswordSignup);
 
         buttonSignUp = findViewById(R.id.buttonSignUp);
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
@@ -172,9 +174,16 @@ public class UserRegistrationFragment extends AppCompatActivity {
     private void insertAccountData() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check if passwords match
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
 
