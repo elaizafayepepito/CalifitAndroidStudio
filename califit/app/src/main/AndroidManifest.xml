@@ -43,5 +43,8 @@
         <activity android:name=".DashboardActivity"></activity>
         <activity android:name=".GuestDashboardActivity"></activity>
         <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".TcList"></activity>
+        <activity android:name=".SsList"></activity>
+        <activity android:name=".IpList"></activity>
     </application>
 </manifest>
