@@ -22,7 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 public class DashboardActivity extends AppCompatActivity {
 
     private String userId;
-    private String accountId;
     private DatabaseReference usersDbRef;
     private DatabaseReference accountsDbRef;
     private DatabaseReference squatsDbRef;
@@ -38,10 +37,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("user_id");
-        accountId = intent.getStringExtra("account_id");
 
         Log.d("DashboardActivity", "User ID received: " + userId);
-        Log.d("DashboardActivity", "Account ID received: " + accountId);
 
         usersDbRef = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Users");
         accountsDbRef = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Accounts");
@@ -51,10 +48,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         if (userId != null) {
             fetchUserDetailsById(userId);
-        } else if (accountId != null) {
-            fetchUserDetailsByAccountId(accountId);
         } else {
-            Toast.makeText(this, "No valid user ID or account ID provided", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No valid user ID provided", Toast.LENGTH_SHORT).show();
         }
 
         squatsTextView = findViewById(R.id.squatProgress);
@@ -134,35 +129,8 @@ public class DashboardActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     Users user = snapshot.getValue(Users.class);
                     if (user != null) {
-                        saveUserDetailsInPreferences(user, userId);
                         Log.d("DashboardActivity", "User details: " + user.toString());
                         fetchAccountDetails(user.getAccountId());
-                    }
-                } else {
-                    Toast.makeText(DashboardActivity.this, "User not found", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("DashboardActivity", "Error fetching user details", error.toException());
-                Toast.makeText(DashboardActivity.this, "Error fetching user details", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void fetchUserDetailsByAccountId(String accountId) {
-        usersDbRef.orderByChild("accountId").equalTo(accountId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        Users user = userSnapshot.getValue(Users.class);
-                        if (user != null) {
-                            saveUserDetailsInPreferences(user, userSnapshot.getKey());
-                            Log.d("DashboardActivity", "User details: " + user.toString());
-                            fetchAccountDetails(user.getAccountId());
-                        }
                     }
                 } else {
                     Toast.makeText(DashboardActivity.this, "User not found", Toast.LENGTH_SHORT).show();
@@ -198,18 +166,6 @@ public class DashboardActivity extends AppCompatActivity {
                 Toast.makeText(DashboardActivity.this, "Error fetching account details", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public void saveUserDetailsInPreferences(Users user, String userId) {
-        SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("user_id", userId);
-        editor.putString("account_id", user.getAccountId());
-        editor.putString("firstname", user.getFirstname());
-        editor.putString("lastname", user.getLastname());
-        editor.putInt("age", user.getAge());
-        editor.putString("gender", user.getGender());
-        editor.apply(); // or editor.commit();
     }
 
     public void saveAccountDetailsInPreferences(Accounts account) {

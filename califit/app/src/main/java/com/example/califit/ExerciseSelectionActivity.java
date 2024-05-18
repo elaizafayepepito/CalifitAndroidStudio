@@ -2,12 +2,14 @@ package com.example.califit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ExerciseSelectionActivity extends AppCompatActivity {
 
@@ -43,14 +45,23 @@ public class ExerciseSelectionActivity extends AppCompatActivity {
     }
 
     public void proceedToTabletopCrunch() {
-        startActivity(new Intent(ExerciseSelectionActivity.this, TableTopCrunchActivity.class));
+        String timeStarted = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        Intent intent = new Intent(ExerciseSelectionActivity.this, TableTopCrunchActivity.class);
+        intent.putExtra("time_started", timeStarted);
+        startActivity(intent);
     }
 
     public void proceedToInclinedPushup() {
-        startActivity(new Intent(ExerciseSelectionActivity.this, InclinedPushupActivity.class));
+        String timeStarted = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        Intent intent = new Intent(ExerciseSelectionActivity.this, InclinedPushupActivity.class);
+        intent.putExtra("time_started", timeStarted);
+        startActivity(intent);
     }
 
     public void proceedToSumoSquat() {
-        startActivity(new Intent(ExerciseSelectionActivity.this, SumoSquatActivity.class));
+        String timeStarted = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        Intent intent = new Intent(ExerciseSelectionActivity.this, SumoSquatActivity.class);
+        intent.putExtra("time_started", timeStarted);
+        startActivity(intent);
     }
 }

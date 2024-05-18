@@ -1,6 +1,8 @@
 package com.example.califit;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,7 +13,10 @@ import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +35,9 @@ import androidx.lifecycle.LifecycleOwner;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseDetection;
@@ -38,13 +46,19 @@ import com.google.mlkit.vision.pose.PoseLandmark;
 import com.google.mlkit.vision.pose.defaults.PoseDetectorOptions;
 
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 public class TableTopCrunchActivity extends AppCompatActivity {
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private TextView counterTextView;
+    private Button saveButton;
+    private DatabaseReference crunchDbRef;
+    private String timeStarted;
 
     int PERMISSION_REQUESTS = 1;
 
@@ -84,11 +98,18 @@ public class TableTopCrunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crunch);
 
+        crunchDbRef = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Crunches");
+
+        Intent intent = getIntent();
+        timeStarted = intent.getStringExtra("time_started");
+
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
 
-        previewView = findViewById(R.id.previewView);
+        previewView = findViewById(R.id.crunchPreviewView);
 
-        display = findViewById(R.id.displayOverlay);
+        display = findViewById(R.id.crunchDisplayOverlay);
+
+        saveButton = findViewById(R.id.crunchSaveButton);
 
         cPaint.setColor(Color.RED);
         cPaint.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -100,7 +121,7 @@ public class TableTopCrunchActivity extends AppCompatActivity {
 
         mediaPlayer = MediaPlayer.create(this, R.raw.beep_sound);
 
-        counterTextView = findViewById(R.id.counterTextView);
+        counterTextView = findViewById(R.id.crunchCounterTextView);
 
         cameraProviderFuture.addListener(() -> {
             try {
@@ -115,6 +136,13 @@ public class TableTopCrunchActivity extends AppCompatActivity {
         if (!allPermissionsGranted()) {
             getRuntimePermissions();
         }
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveCrunchData();
+            }
+        });
     }
 
     Runnable RunMlkit = new Runnable() {
@@ -367,5 +395,44 @@ public class TableTopCrunchActivity extends AppCompatActivity {
         }
 
         return angle;
+    }
+
+    private void saveCrunchData() {
+        String userId = getUserIdFromPreferences();
+        int reps = counter;
+        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        String timeStarted = this.timeStarted;
+        String timeEnded = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        double averageAngleDepth = 45.23;  //Temporary value
+
+        // Create a Squats object with the data
+        Crunches crunch = new Crunches(userId, reps, date, timeStarted, timeEnded, averageAngleDepth);
+
+        // Push the data to the database and attach a completion listener
+        crunchDbRef.push().setValue(crunch, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    // Error occurred while inserting data
+                    Toast.makeText(TableTopCrunchActivity.this, "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    // Data inserted successfully, get the key assigned to the newly added pushup data
+                    String pushupKey = databaseReference.getKey();
+                    navigateToDashboard(getUserIdFromPreferences());
+                    Toast.makeText(TableTopCrunchActivity.this, "Pushup data inserted! ID: " + pushupKey, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public String getUserIdFromPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+        return sharedPreferences.getString("user_id", null);
+    }
+
+    private void navigateToDashboard(String userId) {
+        Intent intent = new Intent(this, DashboardActivity.class);
+        intent.putExtra("user_id", userId);
+        startActivity(intent);
     }
 }

@@ -27,7 +27,7 @@ public class GenderRegistrationFragment extends AppCompatActivity {
     private Button buttonMale;
     private Button buttonFemale;
     private UserAccountService userAccountService;
-    DatabaseReference userDbRef;
+    private DatabaseReference userDbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
