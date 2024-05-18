@@ -33,7 +33,8 @@
         android:hint="Email Address"
         android:inputType="textEmailAddress"
         android:textColor="#1E1E1E"
-        android:textColorHint="#1E1E1E"/>
+        android:textColorHint="#1E1E1E"
+        android:backgroundTint="#1E1E1E"/>
 
     <EditText
         android:id="@+id/editTextPasswordSignup"
@@ -43,7 +44,8 @@
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:textColor="#1E1E1E"
-        android:textColorHint="#1E1E1E"/>
+        android:textColorHint="#1E1E1E"
+        android:backgroundTint="#1E1E1E"/>
 
     <EditText
         android:id="@+id/editTextConfirmPasswordSignup"
@@ -53,7 +55,8 @@
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:textColor="#1E1E1E"
-        android:textColorHint="#1E1E1E"/>
+        android:textColorHint="#1E1E1E"
+        android:backgroundTint="#1E1E1E"/>
 
     <Button
         android:id="@+id/buttonSignUp"
