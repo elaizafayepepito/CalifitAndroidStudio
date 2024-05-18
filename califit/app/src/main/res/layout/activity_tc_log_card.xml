@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="10 repetitions"
             android:textColor="#820000"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
         <TextView
@@ -59,7 +59,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/angle"
+            android:id="@+id/tc_angle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingEnd="8dp"
@@ -71,39 +71,39 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="16dp"
             android:text="Average angle depth"
             android:textColor="#000"
-            android:textSize="8sp"/>
+            android:textSize="8sp"
+            android:gravity="center" />
     </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="37dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical"
             android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:gravity="center">
+            android:paddingEnd="5dp">
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/tc_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="05/16/2024"
                 android:textColor="@color/maroon"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:gravity="center" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="2dp"
                 android:text="Date"
                 android:textColor="#000"
-                android:textSize="8sp"
-                android:gravity="center"
-                android:paddingTop="2dp"/>
+                android:textSize="8sp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

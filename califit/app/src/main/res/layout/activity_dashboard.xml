@@ -161,9 +161,10 @@
                             android:layout_marginTop="5dp"/>
 
                         <TextView
+                            android:id="@+id/tcViewProgress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="CORRECT EXECUTIONS"
+                            android:text="VIEW PROGRESS"
                             android:textColor="@color/maroon"
                             android:textSize="8sp"
                             android:layout_marginTop="5dp"
@@ -209,13 +210,14 @@
                             android:layout_marginTop="5dp"/>
 
                         <TextView
+                            android:id="@+id/ipViewProgress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="CORRECT EXECUTIONS"
-                            android:textColor="@color/maroon"
-                            android:textSize="8sp"
                             android:layout_marginTop="5dp"
-                            android:textAlignment="center"/>
+                            android:text="VIEW PROGRESS"
+                            android:textAlignment="center"
+                            android:textColor="@color/maroon"
+                            android:textSize="8sp" />
 
                     </LinearLayout>
 
@@ -257,9 +259,10 @@
                             android:layout_marginTop="5dp"/>
 
                         <TextView
+                            android:id="@+id/ssViewProgress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="CORRECT EXECUTIONS"
+                            android:text="VIEW PROGRESS"
                             android:textColor="@color/maroon"
                             android:textSize="8sp"
                             android:layout_marginTop="5dp"
