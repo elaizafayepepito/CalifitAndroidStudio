@@ -7,6 +7,8 @@ public class Users {
     int age;
     String gender;
 
+    public Users() {}
+
     public Users(String accountId, String firstname, String lastname, int age, String gender) {
         this.accountId = accountId;
         this.firstname = firstname;
