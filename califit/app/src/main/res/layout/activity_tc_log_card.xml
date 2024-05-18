@@ -32,7 +32,7 @@
         android:paddingEnd="5dp">
 
         <TextView
-            android:id="@+id/repetitions"
+            android:id="@+id/tc_repetitions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10 repetitions"
@@ -41,7 +41,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/time"
+            android:id="@+id/tc_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Time Started: 3:57 PM\nTime Ended: 4:00 PM"
