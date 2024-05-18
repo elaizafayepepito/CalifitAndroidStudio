@@ -31,7 +31,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email Address"
-        android:inputType="textEmailAddress"/>
+        android:inputType="textEmailAddress"
+        android:textColor="#1E1E1E"
+        android:textColorHint="#1E1E1E"
+        android:backgroundTint="#1E1E1E"/>
 
     <EditText
         android:id="@+id/editTextPasswordSignup"
@@ -39,7 +42,10 @@
         android:layout_height="wrap_content"
         android:hint="Password"
         android:inputType="textPassword"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:textColor="#1E1E1E"
+        android:textColorHint="#1E1E1E"
+        android:backgroundTint="#1E1E1E"/>
 
     <EditText
         android:id="@+id/editTextConfirmPasswordSignup"
@@ -47,7 +53,10 @@
         android:layout_height="wrap_content"
         android:hint="Confirm Password"
         android:inputType="textPassword"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:textColor="#1E1E1E"
+        android:textColorHint="#1E1E1E"
+        android:backgroundTint="#1E1E1E"/>
 
     <Button
         android:id="@+id/buttonSignUp"
