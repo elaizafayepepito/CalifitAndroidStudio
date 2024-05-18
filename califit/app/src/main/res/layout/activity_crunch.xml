@@ -9,15 +9,15 @@
     <androidx.camera.view.PreviewView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/previewView"/>
+        android:id="@+id/crunchPreviewView"/>
 
     <com.example.califit.Display
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/displayOverlay"/>
+        android:id="@+id/crunchDisplayOverlay"/>
 
     <TextView
-        android:id="@+id/counterTextView"
+        android:id="@+id/crunchCounterTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -42,7 +42,7 @@
         android:layout_marginStart="16dp" />
 
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/crunchSaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SAVE"

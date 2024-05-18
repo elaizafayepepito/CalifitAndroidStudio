@@ -1,6 +1,7 @@
 package com.example.califit;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -20,8 +21,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -83,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void navigateToDashboard(String accountId) {
+    /*private void navigateToDashboard(String accountId) {
         Intent intent = new Intent(this, DashboardActivity.class);
         intent.putExtra("account_id", accountId);
         startActivity(intent);
@@ -131,5 +134,85 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }*/
+    private void navigateToDashboard(String userId) {
+        Intent intent = new Intent(this, DashboardActivity.class);
+        intent.putExtra("user_id", userId);
+        startActivity(intent);
+    }
+
+    private void login() {
+        final String email = editTextEmail.getText().toString().trim();
+        final String password = editTextPassword.getText().toString().trim();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Email and password cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        accountDbRef.orderByChild("email").equalTo(email).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                    Toast.makeText(LoginActivity.this, "Error getting data from database", Toast.LENGTH_SHORT).show();
+                } else {
+                    DataSnapshot dataSnapshot = task.getResult();
+                    if (dataSnapshot.exists()) {
+                        boolean isPasswordCorrect = false;
+                        for (DataSnapshot accountSnapshot : dataSnapshot.getChildren()) {
+                            Accounts account = accountSnapshot.getValue(Accounts.class);
+                            if (account != null && account.getPassword().equals(password)) {
+                                // Correct password
+                                isPasswordCorrect = true;
+                                String accountId = accountSnapshot.getKey();
+                                navigateToDashboardWithUserId(accountId);
+                                Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+                        }
+                        if (!isPasswordCorrect) {
+                            Toast.makeText(LoginActivity.this, "Incorrect password. Please try again.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Email not found. Please sign up.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+
+    private void navigateToDashboardWithUserId(String accountId) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Users");
+        userRef.orderByChild("accountId").equalTo(accountId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    Users user = userSnapshot.getValue(Users.class);
+                    if (user != null) {
+                        String userKey = userSnapshot.getKey();
+                        saveUserDetailsInPreferences(user, userKey);
+                        navigateToDashboard(userKey);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(LoginActivity.this, "Error retrieving user details", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void saveUserDetailsInPreferences(Users user, String userId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("user_id", userId);
+        editor.putString("account_id", user.getAccountId());
+        editor.putString("firstname", user.getFirstname());
+        editor.putString("lastname", user.getLastname());
+        editor.putInt("age", user.getAge());
+        editor.putString("gender", user.getGender());
+        editor.apply(); // or editor.commit();
     }
 }
