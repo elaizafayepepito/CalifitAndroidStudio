@@ -22,12 +22,15 @@ public class TcList extends AppCompatActivity {
     DatabaseReference database;
     TcLogAdapter tcLogAdapter;
     ArrayList<Crunches> list;
-
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tc_logs);
+
+        Intent intent = getIntent();
+        userId = intent.getStringExtra("user_id");
 
         recyclerView = findViewById(R.id.tcList);
         database = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Crunches");
@@ -38,21 +41,23 @@ public class TcList extends AppCompatActivity {
         tcLogAdapter = new TcLogAdapter(this,list);
         recyclerView.setAdapter(tcLogAdapter);
 
-        database.addValueEventListener(new ValueEventListener() {
+        database.orderByChild("userId").equalTo(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Crunches crunch = dataSnapshot.getValue(Crunches.class);
-                    list.add(crunch);
-                    Log.d("TCLIST", "Crunch value received: " + crunch);
+                    if (crunch != null) {
+                        list.add(crunch);
+                        Log.d("TCLIST", "Crunch value received: " + crunch);
+                    }
                 }
                 tcLogAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
-
+                Log.e("TCLIST", "Error fetching data", error.toException());
             }
         });
 
