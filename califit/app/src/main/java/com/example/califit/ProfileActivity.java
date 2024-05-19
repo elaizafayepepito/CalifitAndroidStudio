@@ -3,6 +3,8 @@ package com.example.califit;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView profileGender;
     private TextView profileEmail;
     private TextView profilePassword;
+    private Button buttonLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,18 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
             Log.d("ProfileActivity", "No user details found in SharedPreferences");
         }
+
+        buttonLogout = findViewById(R.id.logoutButton);
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
+    }
+
+    private void logout() {
+        finishAffinity();
     }
 
     public Users getUserDetailsFromPreferences() {
