@@ -1,6 +1,7 @@
 package com.example.califit;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,7 +27,16 @@ public class SplashscreenActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                startActivity(new Intent(SplashscreenActivity.this, WelcomeActivity.class));
+                SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+
+                if (sharedPreferences.contains("user_id")) {
+                    String value = sharedPreferences.getString("user_id", null);
+                    Intent intent = new Intent(SplashscreenActivity.this, DashboardActivity.class);
+                    intent.putExtra("user_id", value);
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(SplashscreenActivity.this, WelcomeActivity.class));
+                }
                 finish();
             }
 

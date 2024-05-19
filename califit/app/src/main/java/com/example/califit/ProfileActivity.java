@@ -47,9 +47,17 @@ public class ProfileActivity extends AppCompatActivity {
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clearSharedPreferences();
                 logout();
             }
         });
+    }
+
+    private void clearSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
     }
 
     private void logout() {
