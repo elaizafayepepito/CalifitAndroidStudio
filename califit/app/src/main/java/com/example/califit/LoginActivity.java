@@ -115,55 +115,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*private void navigateToDashboard(String accountId) {
-        Intent intent = new Intent(this, DashboardActivity.class);
-        intent.putExtra("account_id", accountId);
-        startActivity(intent);
-    }
-
-    private void login() {
-        final String email = editTextEmail.getText().toString().trim();
-        final String password = editTextPassword.getText().toString().trim();
-
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(LoginActivity.this, "Email and password cannot be empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        accountDbRef.orderByChild("email").equalTo(email).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                    Toast.makeText(LoginActivity.this, "Error getting data from database", Toast.LENGTH_SHORT).show();
-                } else {
-                    DataSnapshot dataSnapshot = task.getResult();
-                    if (dataSnapshot.exists()) {
-                        // Email found, now check password
-                        boolean isPasswordCorrect = false;
-                        for (DataSnapshot accountSnapshot : dataSnapshot.getChildren()) {
-                            Accounts account = accountSnapshot.getValue(Accounts.class);
-                            if (account != null && account.getPassword().equals(password)) {
-                                // Correct password
-                                isPasswordCorrect = true;
-                                String accountId = accountSnapshot.getKey();
-                                navigateToDashboard(accountId);
-                                Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                                break;
-                            }
-                        }
-                        if (!isPasswordCorrect) {
-                            // Password incorrect
-                            Toast.makeText(LoginActivity.this, "Incorrect password. Please try again.", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        // Email not found
-                        Toast.makeText(LoginActivity.this, "Email not found. Please sign up.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-    }*/
     private void navigateToDashboard(String userId) {
         Intent intent = new Intent(this, DashboardActivity.class);
         intent.putExtra("user_id", userId);
