@@ -3,6 +3,7 @@ package com.example.califit;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -12,6 +13,7 @@ import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,10 @@ public class UserRegistrationFragment extends AppCompatActivity {
     private EditText editTextConfirmPassword;
     private String id;
     private Button buttonSignUp;
+    private ImageView ivTogglePasswordSignup;
+    private ImageView ivToggleConfirmPasswordSignup;
+    private boolean isPasswordVisible;
+    private boolean isConfirmPasswordVisible;
     DatabaseReference accountDbRef;
 
     @SuppressLint("MissingInflatedId")
@@ -47,6 +53,11 @@ public class UserRegistrationFragment extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmailSignup);
         editTextPassword = findViewById(R.id.editTextPasswordSignup);
         editTextConfirmPassword = findViewById(R.id.editTextConfirmPasswordSignup);
+        ivTogglePasswordSignup = findViewById(R.id.ivTogglePasswordSignup);
+        ivToggleConfirmPasswordSignup = findViewById(R.id.ivToggleConfirmPasswordSignup);
+
+        setupPasswordVisibilityToggle(editTextPassword, ivTogglePasswordSignup);
+        setupPasswordVisibilityToggle(editTextConfirmPassword, ivToggleConfirmPasswordSignup);
 
         buttonSignUp = findViewById(R.id.buttonSignUp);
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +176,21 @@ public class UserRegistrationFragment extends AppCompatActivity {
         userAccountService.createAccount(accountData, responseListener, errorListener);
     }*/
 
+    private void setupPasswordVisibilityToggle(final EditText editText, final ImageView imageView) {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                    imageView.setImageResource(R.drawable.ph_eye_open);
+                    editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    imageView.setImageResource(R.drawable.ph_eye_closed);
+                    editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+                editText.setSelection(editText.getText().length());
+            }
+        });
+    }
     private void navigateToNameRegistration(String accountId) {
         Intent intent = new Intent(this, NameRegistrationFragment.class);
         intent.putExtra("account_id", accountId);

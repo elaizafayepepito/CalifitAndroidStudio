@@ -3,6 +3,7 @@ package com.example.califit;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     private UserAccountService userAccountService;
     private EditText editTextEmail;
     private EditText editTextPassword;
+    private ImageView ivTogglePassword;
+    private boolean isPasswordVisible;
     private DatabaseReference accountDbRef;
 
     @Override
@@ -57,6 +61,31 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
+        ivTogglePassword = findViewById(R.id.ivTogglePassword);
+
+        setupPasswordVisibilityToggle();
+    }
+
+    private void setupPasswordVisibilityToggle() {
+        ivTogglePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPasswordVisible) {
+                    // Change icon to eye closed
+                    ivTogglePassword.setImageResource(R.drawable.ph_eye_open);
+                    // Set EditText to hide password
+                    editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    editTextPassword.setSelection(editTextPassword.getText().length());
+                } else {
+                    // Change icon to eye open
+                    ivTogglePassword.setImageResource(R.drawable.ph_eye_closed);
+                    // Set EditText to show password
+                    editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    editTextPassword.setSelection(editTextPassword.getText().length());
+                }
+                isPasswordVisible = !isPasswordVisible;
+            }
+        });
     }
 
     private void makePartOfTextClickable(TextView textView, String nonLinkText, String linkText) {
