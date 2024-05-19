@@ -287,13 +287,24 @@ public class InclinedPushupActivity extends AppCompatActivity {
                             Log.d("RightArm:", "Right Arm:" + rightAngle);
 
                             // Determine stage of push-up movement
-                            if (leftAngle <= 90 && rightAngle <= 90) {
+                            /*if (leftAngle <= 90 && rightAngle <= 90) {
                                 stage = "down";
                                 Log.d("Stage:", "DOWN " + stage);
                             }
                             if (stage.equals("down") && leftAngle > 90 && rightAngle > 90) {
                                 stage = "up";
                                 Log.d("Stage:", "UP " + stage);
+                                counter++;
+                                mediaPlayer.start();
+                            }*/
+                            if (leftAngle > 90 && rightAngle > 90) {
+                                stage = "up";
+                                Log.d("Stage:", "UP " + stage);
+                            }
+
+                            if (stage.equals("up") && leftAngle <= 90 && rightAngle <= 90) {
+                                stage = "down";
+                                Log.d("Stage:", "DOWN " + stage);
                                 counter++;
                                 mediaPlayer.start();
                             }

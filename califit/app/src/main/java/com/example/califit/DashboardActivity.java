@@ -139,6 +139,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void navigateToTcLogs() {
         Intent intent = new Intent(this, TcList.class);
+        intent.putExtra("user_id", userId);
         startActivity(intent);
     }
 
@@ -150,6 +151,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void navigateToIpLogs() {
         Intent intent = new Intent(this, IpList.class);
+        intent.putExtra("user_id", userId);
         startActivity(intent);
     }
 

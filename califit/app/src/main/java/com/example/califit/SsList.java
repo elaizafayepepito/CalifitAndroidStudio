@@ -25,7 +25,6 @@ public class SsList extends AppCompatActivity {
     ArrayList<Squats> list;
     private String userId;
 
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

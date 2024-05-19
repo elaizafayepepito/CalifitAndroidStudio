@@ -23,13 +23,16 @@ public class IpList extends AppCompatActivity {
     DatabaseReference database;
     IpLogAdapter ipLogAdapter;
     ArrayList<Pushups> list;
-
+    private String userId;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ip_logs);
+
+        Intent intent = getIntent();
+        userId = intent.getStringExtra("user_id");
 
         recyclerView = findViewById(R.id.ipList);
         database = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Pushups");
@@ -40,21 +43,23 @@ public class IpList extends AppCompatActivity {
         ipLogAdapter = new IpLogAdapter(this,list);
         recyclerView.setAdapter(ipLogAdapter);
 
-        database.addValueEventListener(new ValueEventListener() {
+        database.orderByChild("userId").equalTo(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Pushups pushup = dataSnapshot.getValue(Pushups.class);
-                    list.add(pushup);
-                    Log.d("IPLIST", "Pushup value received: " + pushup);
+                    if (pushup != null) {
+                        list.add(pushup);
+                        Log.d("IPLIST", "Squat value received: " + pushup);
+                    }
                 }
                 ipLogAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
-
+                Log.e("IPLIST", "Error fetching data", error.toException());
             }
         });
 
