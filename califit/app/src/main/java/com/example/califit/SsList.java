@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SsList extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -54,6 +55,7 @@ public class SsList extends AppCompatActivity {
                         Log.d("SSLIST", "Squat value received: " + squat);
                     }
                 }
+                Collections.reverse(list);
                 ssLogAdapter.notifyDataSetChanged();
             }
 

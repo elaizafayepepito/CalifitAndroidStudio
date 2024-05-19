@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class IpList extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -54,6 +55,7 @@ public class IpList extends AppCompatActivity {
                         Log.d("IPLIST", "Squat value received: " + pushup);
                     }
                 }
+                Collections.reverse(list);
                 ipLogAdapter.notifyDataSetChanged();
             }
 
