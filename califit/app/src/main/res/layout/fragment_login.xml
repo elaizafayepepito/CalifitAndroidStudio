@@ -40,16 +40,34 @@
             android:textColorHint="#1E1E1E"
             android:backgroundTint="#1E1E1E"/>
 
-        <EditText
-            android:id="@+id/editTextPassword"
+        <!-- Password EditText with Eye Icon for toggling password visibility -->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:layout_marginBottom="10dp"
-            android:textColor="#1E1E1E"
-            android:textColorHint="#1E1E1E"
-            android:backgroundTint="#1E1E1E"/>
+            android:layout_marginBottom="10dp">
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColor="#1E1E1E"
+                android:textColorHint="#1E1E1E"
+                android:backgroundTint="#1E1E1E"
+                android:paddingRight="30dp"/>
+
+            <ImageView
+                android:id="@+id/ivTogglePassword"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ph_eye_closed"
+                />
+        </RelativeLayout>
+
 
         <Button
             android:id="@+id/buttonSignIn"
