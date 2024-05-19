@@ -437,7 +437,7 @@ public class InclinedPushupActivity extends AppCompatActivity {
                     // Data inserted successfully, get the key assigned to the newly added pushup data
                     String pushupKey = databaseReference.getKey();
                     backToDashboard();
-                    Toast.makeText(InclinedPushupActivity.this, "Pushup data inserted! ID: " + pushupKey, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InclinedPushupActivity.this, "Pushup data saved successfully!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

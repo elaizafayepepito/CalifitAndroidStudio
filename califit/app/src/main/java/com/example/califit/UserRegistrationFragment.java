@@ -28,7 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserRegistrationFragment extends AppCompatActivity {
 
-    private UserAccountService userAccountService;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private EditText editTextConfirmPassword;
@@ -47,8 +46,6 @@ public class UserRegistrationFragment extends AppCompatActivity {
         setContentView(R.layout.fragment_user_registration);
 
         accountDbRef = FirebaseDatabase.getInstance("https://califitdb-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Accounts");
-
-        userAccountService = new UserAccountService(this);
 
         editTextEmail = findViewById(R.id.editTextEmailSignup);
         editTextPassword = findViewById(R.id.editTextPasswordSignup);
@@ -122,60 +119,6 @@ public class UserRegistrationFragment extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*private void handleSignUp() {
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
-
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        JSONObject accountData = new JSONObject();
-        try {
-            accountData.put("email", email);
-            accountData.put("password", password);
-        } catch (Exception e) {
-            Log.e("UserRegistration", "Error creating JSON data: " + e.getMessage());
-            return;
-        }
-
-        // Define a response listener to handle the successful account creation response
-        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    // Parse the response JSON
-                    String message = response.getString("message");
-                    String accountId = response.getString("account_id");
-
-                    // Log the success message and account ID
-                    Log.d("UserRegistration", "Account created successfully: " + message + ", Account ID: " + accountId);
-                    Toast.makeText(UserRegistrationFragment.this, "Account created successfully", Toast.LENGTH_SHORT).show();
-
-                    // Navigate to the NameRegistrationFragment
-                    navigateToNameRegistration(accountId);
-                } catch (Exception e) {
-                    Log.e("UserRegistration", "Error parsing account creation response: " + e.getMessage());
-                    Toast.makeText(UserRegistrationFragment.this, "Account creation failed", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-
-        // Define an error listener to handle any account creation errors
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // Log the error message and show error message to user
-                Log.e("UserRegistration", "Account creation error: " + error.getMessage());
-                Toast.makeText(UserRegistrationFragment.this, "Account creation error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        // Call the createAccount method of UserAccountService with the data and listeners
-        userAccountService.createAccount(accountData, responseListener, errorListener);
-    }*/
-
     private void setupPasswordVisibilityToggle(final EditText editText, final ImageView imageView) {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,7 +178,7 @@ public class UserRegistrationFragment extends AppCompatActivity {
                                 // Data inserted successfully, get the key assigned to the newly created account
                                 String accountKey = databaseReference.getKey();
                                 navigateToNameRegistration(accountKey);
-                                Toast.makeText(UserRegistrationFragment.this, "Account data inserted! ID: " + accountKey, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(UserRegistrationFragment.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

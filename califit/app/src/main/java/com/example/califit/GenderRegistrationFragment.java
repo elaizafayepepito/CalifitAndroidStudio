@@ -1,6 +1,7 @@
 package com.example.califit;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +27,7 @@ public class GenderRegistrationFragment extends AppCompatActivity {
     private String gender;
     private Button buttonMale;
     private Button buttonFemale;
-    private UserAccountService userAccountService;
+    private String userKey;
     private DatabaseReference userDbRef;
 
     @Override
@@ -50,8 +51,6 @@ public class GenderRegistrationFragment extends AppCompatActivity {
         buttonFemale = findViewById(R.id.buttonFemale);
         buttonFinish = findViewById(R.id.buttonFinish);
 
-        userAccountService = new UserAccountService(this);
-
         buttonMale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +68,6 @@ public class GenderRegistrationFragment extends AppCompatActivity {
         buttonFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //createUser();
                 insertUserData();
             }
         });
@@ -92,6 +90,42 @@ public class GenderRegistrationFragment extends AppCompatActivity {
         Intent intent = new Intent(this, DashboardActivity.class);
         intent.putExtra("user_id", userId);
         startActivity(intent);
+    }
+
+    public void saveUserDetailsInPreferences(Users user) {
+        SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("user_id", userKey);
+        editor.putString("account_id", user.getAccountId());
+        editor.putString("firstname", user.getFirstname());
+        editor.putString("lastname", user.getLastname());
+        editor.putInt("age", user.getAge());
+        editor.putString("gender", user.getGender());
+        editor.apply(); // or editor.commit();
+    }
+
+    private void navigateToDashboardWithUserDetails(String userId) {
+        userDbRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Users user = snapshot.getValue(Users.class);
+                    if (user != null) {
+                        saveUserDetailsInPreferences(user);
+                        navigateToDashboard(userId);
+                        Log.d("GenderRegistrationActivity", "User details: " + user.toString());
+                    }
+                } else {
+                    Toast.makeText(GenderRegistrationFragment.this, "User not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("DashboardActivity", "Error fetching account details", error.toException());
+                Toast.makeText(GenderRegistrationFragment.this, "Error fetching account details", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void insertUserData() {
@@ -126,9 +160,9 @@ public class GenderRegistrationFragment extends AppCompatActivity {
                                 Toast.makeText(GenderRegistrationFragment.this, "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                             } else {
                                 // Data inserted successfully, get the key assigned to the newly created account
-                                String userKey = databaseReference.getKey();
-                                navigateToDashboard(userKey);
-                                Toast.makeText(GenderRegistrationFragment.this, "User data inserted! ID: " + userKey, Toast.LENGTH_SHORT).show();
+                                userKey = databaseReference.getKey();
+                                navigateToDashboardWithUserDetails(userKey);
+                                Toast.makeText(GenderRegistrationFragment.this, "User created successfully!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

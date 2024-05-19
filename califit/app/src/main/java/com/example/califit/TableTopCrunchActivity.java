@@ -425,7 +425,7 @@ public class TableTopCrunchActivity extends AppCompatActivity {
                     // Data inserted successfully, get the key assigned to the newly added pushup data
                     String pushupKey = databaseReference.getKey();
                     backToDashboard();
-                    Toast.makeText(TableTopCrunchActivity.this, "Pushup data inserted! ID: " + pushupKey, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TableTopCrunchActivity.this, "Pushup data saved successfully!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

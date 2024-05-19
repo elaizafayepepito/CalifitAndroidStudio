@@ -434,7 +434,7 @@ public class SumoSquatActivity extends AppCompatActivity {
 
                     String squatKey = databaseReference.getKey();
                     backToDashboard();
-                    Toast.makeText(SumoSquatActivity.this, "Squat data inserted! ID: " + squatKey, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SumoSquatActivity.this, "Squat data saved successfully!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
