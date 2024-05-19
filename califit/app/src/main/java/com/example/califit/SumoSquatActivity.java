@@ -431,12 +431,23 @@ public class SumoSquatActivity extends AppCompatActivity {
                     Toast.makeText(SumoSquatActivity.this, "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
                     // Data inserted successfully, get the key assigned to the newly added squat data
+
                     String squatKey = databaseReference.getKey();
-                    navigateToDashboard(getUserIdFromPreferences());
+                    backToDashboard();
                     Toast.makeText(SumoSquatActivity.this, "Squat data inserted! ID: " + squatKey, Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void backToDashboard() {
+        SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+
+        if (sharedPreferences.contains("user_id")) {
+            navigateToDashboard(getUserIdFromPreferences());
+        } else {
+            navigateToGuestDashboard();
+        }
     }
 
     public String getUserIdFromPreferences() {
@@ -444,11 +455,17 @@ public class SumoSquatActivity extends AppCompatActivity {
         return sharedPreferences.getString("user_id", null);
     }
 
+    private void navigateToGuestDashboard () {
+        Intent intent = new Intent(this, GuestDashboardActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     private void navigateToDashboard(String userId) {
         Intent intent = new Intent(this, DashboardActivity.class);
         intent.putExtra("user_id", userId);
         startActivity(intent);
+        finish();
     }
 
     public static float computeAverage(ArrayList<Float> floatList) {

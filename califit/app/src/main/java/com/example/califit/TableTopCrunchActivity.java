@@ -424,11 +424,21 @@ public class TableTopCrunchActivity extends AppCompatActivity {
                 } else {
                     // Data inserted successfully, get the key assigned to the newly added pushup data
                     String pushupKey = databaseReference.getKey();
-                    navigateToDashboard(getUserIdFromPreferences());
+                    backToDashboard();
                     Toast.makeText(TableTopCrunchActivity.this, "Pushup data inserted! ID: " + pushupKey, Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void backToDashboard() {
+        SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+
+        if (sharedPreferences.contains("user_id")) {
+            navigateToDashboard(getUserIdFromPreferences());
+        } else {
+            navigateToGuestDashboard();
+        }
     }
 
     public String getUserIdFromPreferences() {
@@ -436,9 +446,16 @@ public class TableTopCrunchActivity extends AppCompatActivity {
         return sharedPreferences.getString("user_id", null);
     }
 
+    private void navigateToGuestDashboard () {
+        Intent intent = new Intent(this, GuestDashboardActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void navigateToDashboard(String userId) {
         Intent intent = new Intent(this, DashboardActivity.class);
         intent.putExtra("user_id", userId);
         startActivity(intent);
+        finish();
     }
 }
