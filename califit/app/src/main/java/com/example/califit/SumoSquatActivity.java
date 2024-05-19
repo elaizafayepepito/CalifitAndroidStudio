@@ -59,6 +59,7 @@ public class SumoSquatActivity extends AppCompatActivity {
     private Button saveButton;
     private DatabaseReference squatDbRef;
     private String timeStarted;
+    ArrayList<Float> squatAngleList = new ArrayList<>();
 
     int PERMISSION_REQUESTS = 1;
 
@@ -300,9 +301,12 @@ public class SumoSquatActivity extends AppCompatActivity {
                                 Log.d("Stage:", "UP " + stage);
                             }
                             if (stage.equals("up") && leftAngle <= 90 && rightAngle <= 90) {
+                                float angleAverage = (leftAngle + rightAngle) / 2;
+                                Log.d("Left and Right Average:", "Average Value: " + angleAverage);
                                 stage = "down";
                                 Log.d("Stage:", "DOWN " + stage);
                                 counter++;
+                                squatAngleList.add(angleAverage);
                                 mediaPlayer.start();
                             }
 
@@ -407,12 +411,13 @@ public class SumoSquatActivity extends AppCompatActivity {
     }
 
     private void saveSquatData() {
+        Log.d("SQUAT ANGLE LIST", "Values" + squatAngleList);
         String userId = getUserIdFromPreferences();
         int reps = counter;
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         String timeStarted = this.timeStarted;
         String timeEnded = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-        double averageAngleDepth = 89.11;  //Temporary value
+        double averageAngleDepth = Double.parseDouble(String.format("%.2f", computeAverage(squatAngleList)));
 
         // Create a Squats object with the data
         Squats squat = new Squats(userId, reps, date, timeStarted, timeEnded, averageAngleDepth);
@@ -439,37 +444,24 @@ public class SumoSquatActivity extends AppCompatActivity {
         return sharedPreferences.getString("user_id", null);
     }
 
-    private double calculateAverageAngleDepth() {
-        // Calculate average angle depth based on the poses captured
-        double totalAngle = 0.0;
-        int count = 0;
-        for (Pose pose : poseArrayList) {
-            PoseLandmark leftKnee = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE);
-            PoseLandmark leftAnkle = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE);
-            PoseLandmark leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP);
-
-            if (leftKnee != null && leftAnkle != null && leftHip != null) {
-                float leftAngle = calculateAngle(leftHip, leftKnee, leftAnkle);
-                totalAngle += leftAngle;
-                count++;
-            }
-
-            PoseLandmark rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE);
-            PoseLandmark rightAnkle = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE);
-            PoseLandmark rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP);
-
-            if (rightKnee != null && rightAnkle != null && rightHip != null) {
-                float rightAngle = calculateAngle(rightHip, rightKnee, rightAnkle);
-                totalAngle += rightAngle;
-                count++;
-            }
-        }
-        return count > 0 ? totalAngle / count : 0.0;
-    }
 
     private void navigateToDashboard(String userId) {
         Intent intent = new Intent(this, DashboardActivity.class);
         intent.putExtra("user_id", userId);
         startActivity(intent);
+    }
+
+    public static float computeAverage(ArrayList<Float> floatList) {
+        if (floatList.isEmpty()) {
+            return 0;
+        }
+
+        float sum = 0;
+
+        for (Float value : floatList) {
+            sum += value;
+        }
+
+        return sum / floatList.size();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.califit;
 
+import static com.example.califit.SumoSquatActivity.computeAverage;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -60,6 +62,7 @@ public class InclinedPushupActivity extends AppCompatActivity {
     private Button saveButton;
     private DatabaseReference pushupDbRef;
     private String timeStarted;
+    ArrayList<Float> pushupAngleList = new ArrayList<>();
 
     int PERMISSION_REQUESTS = 1;
 
@@ -303,9 +306,11 @@ public class InclinedPushupActivity extends AppCompatActivity {
                             }
 
                             if (stage.equals("up") && leftAngle <= 90 && rightAngle <= 90) {
+                                float angleAverage = (leftAngle + rightAngle) / 2;
                                 stage = "down";
                                 Log.d("Stage:", "DOWN " + stage);
                                 counter++;
+                                pushupAngleList.add(angleAverage);
                                 mediaPlayer.start();
                             }
 
@@ -410,12 +415,13 @@ public class InclinedPushupActivity extends AppCompatActivity {
     }
 
     private void savePushupData() {
+        Log.d("PUSHUP ANGLE LIST", "Values" + pushupAngleList);
         String userId = getUserIdFromPreferences();
         int reps = counter;
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         String timeStarted = this.timeStarted;
         String timeEnded = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-        double averageAngleDepth = 45.23;  //Temporary value
+        double averageAngleDepth = Double.parseDouble(String.format("%.2f", computeAverage(pushupAngleList)));
 
         // Create a Squats object with the data
         Pushups pushup = new Pushups(userId, reps, date, timeStarted, timeEnded, averageAngleDepth);

@@ -1,5 +1,7 @@
 package com.example.califit;
 
+import static com.example.califit.SumoSquatActivity.computeAverage;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -59,6 +61,7 @@ public class TableTopCrunchActivity extends AppCompatActivity {
     private Button saveButton;
     private DatabaseReference crunchDbRef;
     private String timeStarted;
+    ArrayList<Float> crunchAngleList = new ArrayList<>();
 
     int PERMISSION_REQUESTS = 1;
 
@@ -290,9 +293,11 @@ public class TableTopCrunchActivity extends AppCompatActivity {
                                 Log.d("Stage:", "DOWN " + stage);
                             }
                             if (stage.equals("down") && leftAngle < 90 && rightAngle < 90) {
+                                float angleAverage = (leftAngle + rightAngle) / 2;
                                 stage = "up";
                                 Log.d("Stage:", "UP " + stage);
                                 counter++;
+                                crunchAngleList.add(angleAverage);
                                 mediaPlayer.start();
                             }
 
@@ -398,12 +403,13 @@ public class TableTopCrunchActivity extends AppCompatActivity {
     }
 
     private void saveCrunchData() {
+        Log.d("CRUNCH ANGLE LIST", "Values" + crunchAngleList);
         String userId = getUserIdFromPreferences();
         int reps = counter;
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         String timeStarted = this.timeStarted;
         String timeEnded = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-        double averageAngleDepth = 45.23;  //Temporary value
+        double averageAngleDepth = Double.parseDouble(String.format("%.2f", computeAverage(crunchAngleList)));
 
         // Create a Squats object with the data
         Crunches crunch = new Crunches(userId, reps, date, timeStarted, timeEnded, averageAngleDepth);
