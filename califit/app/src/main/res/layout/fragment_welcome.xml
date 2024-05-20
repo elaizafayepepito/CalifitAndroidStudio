@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F9E79F"
-    tools:context=".WelcomeFragment">
+    tools:context=".WelcomeActivity">
 
     <ImageView
         android:id="@+id/image_welcome"
@@ -50,6 +50,7 @@
         android:paddingVertical="15dp"
         android:text="Start Your Journey"
         android:textColor="#FFF"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:onClick="startJourney"/>
 
 </RelativeLayout>

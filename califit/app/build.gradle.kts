@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -50,6 +51,14 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.camera.camera.core)
+    implementation(libs.androidx.camera.camera.camera2)
+    implementation(libs.androidx.camera.camera.lifecycle)
+    implementation(libs.androidx.camera.camera.video)
+    implementation(libs.androidx.camera.camera.view)
+    implementation(libs.androidx.camera.camera.extensions)
+    implementation(libs.com.google.android.material)
+    implementation(libs.com.google.mlkit.pose.detection)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -62,6 +71,12 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(project(":openCV"))
+    implementation(libs.core)
+    implementation(libs.pose.detection.common)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.volley)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,4 +84,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-database")
 }
