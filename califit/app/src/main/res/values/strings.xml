@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">califit</string>
+    <string name="app_name">Califit</string>
+    <string name="profile_title">Profile</string>
+    <string name="edit">Edit</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="authentication_information">Authentication Information</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="logout">Logout</string>
+    <string name="lets_workout_tagline">Let\'s <b><font color="#800000">workout</font></b> to get some gains!</string>
+
 </resources>

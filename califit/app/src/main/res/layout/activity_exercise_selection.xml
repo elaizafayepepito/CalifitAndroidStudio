@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9E79F">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select exercise to record"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Tabletop Crunch Button -->
+        <LinearLayout
+            android:id="@+id/exerciseTabletopCrunch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/exercise_background"
+            android:padding="10dp"
+            android:layout_marginBottom="14dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="proceedToTabletopCrunch">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tabletop Crunch"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"/>
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/tabletop_crunch"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <!-- Inclined Pushup Button -->
+        <LinearLayout
+            android:id="@+id/exerciseInclinedPushup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/exercise_background"
+            android:padding="10dp"
+            android:layout_marginBottom="14dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="proceedToInclinedPushup">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Inclined Pushup"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"/>
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/inclined_pushup"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
+        <!-- Sumo Squat Button -->
+        <LinearLayout
+            android:id="@+id/exerciseSumoSquat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/exercise_background"
+            android:padding="10dp"
+            android:layout_marginBottom="14dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="proceedToSumoSquat">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sumo Squat"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"/>
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/sumo_squat"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

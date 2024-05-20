@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -23,6 +28,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TemporaryActivity"></activity>
+        <activity android:name=".SplashscreenActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".WelcomeActivity"></activity>
+        <activity android:name=".UserRegistrationFragment"></activity>
+        <activity android:name=".NameRegistrationFragment"></activity>
+        <activity android:name=".AgeRegistrationFragment"></activity>
+        <activity android:name=".GenderRegistrationFragment"></activity>
+        <activity android:name=".ExerciseSelectionActivity"></activity>
+        <activity android:name=".SumoSquatActivity"></activity>
+        <activity android:name=".TableTopCrunchActivity"></activity>
+        <activity android:name=".InclinedPushupActivity"></activity>
+        <activity android:name=".DashboardActivity"></activity>
+        <activity android:name=".GuestDashboardActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".TcList"></activity>
+        <activity android:name=".SsList"></activity>
+        <activity android:name=".IpList"></activity>
     </application>
-
 </manifest>
