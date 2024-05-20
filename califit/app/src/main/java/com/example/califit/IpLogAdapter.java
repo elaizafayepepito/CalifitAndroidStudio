@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -35,6 +35,7 @@ public class IpLogAdapter extends RecyclerView.Adapter<IpLogAdapter.IpLogViewHol
         holder.ip_time.setText("Time Started: " + pushups.getTimeStarted() + "\nTime Ended: " + pushups.getTimeEnded());
         holder.ip_angle.setText(String.valueOf(pushups.getAverageAngleDepth()));
         holder.ip_date.setText(pushups.getDate());
+        holder.ip_level.setText(pushups.getLevel() + " LEVEL");
     }
 
     @Override
@@ -43,7 +44,7 @@ public class IpLogAdapter extends RecyclerView.Adapter<IpLogAdapter.IpLogViewHol
     }
 
     public static class IpLogViewHolder extends RecyclerView.ViewHolder {
-        TextView ip_repetitions, ip_time, ip_angle, ip_date;
+        TextView ip_repetitions, ip_time, ip_angle, ip_date, ip_level;
 
         public IpLogViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,6 +52,7 @@ public class IpLogAdapter extends RecyclerView.Adapter<IpLogAdapter.IpLogViewHol
             ip_time = itemView.findViewById(R.id.ip_time);
             ip_angle = itemView.findViewById(R.id.ip_angle);
             ip_date = itemView.findViewById(R.id.ip_date);
+            ip_level = itemView.findViewById(R.id.ip_level);
         }
     }
 }

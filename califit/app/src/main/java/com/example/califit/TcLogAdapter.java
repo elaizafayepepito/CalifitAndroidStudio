@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -35,6 +35,7 @@ public class TcLogAdapter extends RecyclerView.Adapter<TcLogAdapter.TcLogViewHol
         holder.tc_time.setText("Time Started: " + crunches.getTimeStarted() + "\nTime Ended: " + crunches.getTimeEnded());
         holder.tc_angle.setText(String.valueOf(crunches.getAverageAngleDepth()));
         holder.tc_date.setText(crunches.getDate());
+        holder.tc_level.setText(crunches.getLevel() + " LEVEL");
     }
 
     @Override
@@ -43,7 +44,7 @@ public class TcLogAdapter extends RecyclerView.Adapter<TcLogAdapter.TcLogViewHol
     }
 
     public static class TcLogViewHolder extends RecyclerView.ViewHolder {
-        TextView tc_repetitions, tc_time, tc_angle, tc_date;
+        TextView tc_repetitions, tc_time, tc_angle, tc_date, tc_level;
 
         public TcLogViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,6 +52,7 @@ public class TcLogAdapter extends RecyclerView.Adapter<TcLogAdapter.TcLogViewHol
             tc_time = itemView.findViewById(R.id.tc_time);
             tc_angle = itemView.findViewById(R.id.tc_angle);
             tc_date = itemView.findViewById(R.id.tc_date);
+            tc_level = itemView.findViewById(R.id.tc_level);
         }
     }
 }

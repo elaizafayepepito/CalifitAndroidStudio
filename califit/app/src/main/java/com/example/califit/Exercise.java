@@ -8,16 +8,18 @@ public class Exercise implements Serializable {
     private String timeStarted;
     private String timeEnded;
     private double averageAngleDepth;
+    private String level;
 
     public Exercise() {}
 
-    public Exercise(String userId, int reps, String date, String timeStarted, String timeEnded, double averageAngleDepth) {
+    public Exercise(String userId, int reps, String date, String timeStarted, String timeEnded, double averageAngleDepth, String level) {
         this.userId = userId;
         this.reps = reps;
         this.date = date;
         this.timeStarted = timeStarted;
         this.timeEnded = timeEnded;
         this.averageAngleDepth = averageAngleDepth;
+        this.level = level;
     }
 
     public String getUserId() {
@@ -42,5 +44,9 @@ public class Exercise implements Serializable {
 
     public double getAverageAngleDepth() {
         return averageAngleDepth;
+    }
+
+    public String getLevel() {
+        return level;
     }
 }

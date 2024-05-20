@@ -285,22 +285,25 @@ public class SumoSquatActivity extends AppCompatActivity {
                             Log.d("RightKnee:", "Right Knee:" + rightAngle);
 
                             // Determine stage of squat movement -- comment
-                            /*if (leftAngle <= 90 && rightAngle <= 90) {
+                            /*if (leftAngle <= 160 && rightAngle <= 160) {
                                 stage = "down";
                                 Log.d("Stage:", "DOWN " + stage);
+                                float angleAverage = (leftAngle + rightAngle) / 2;
+                                Log.d("Left and Right Average:", "Average Value: " + angleAverage);
+                                squatAngleList.add(angleAverage);
                             }
-                            if (stage.equals("down") && leftAngle > 90 && rightAngle > 90) {
+                            if (stage.equals("down") && leftAngle > 160 && rightAngle > 160) {
                                 stage = "up";
                                 Log.d("Stage:", "UP " + stage);
                                 counter++;
                                 mediaPlayer.start();
                             }*/
 
-                            if (leftAngle > 90 && rightAngle > 90) {
+                            if (leftAngle > 120 && rightAngle > 120) {
                                 stage = "up";
                                 Log.d("Stage:", "UP " + stage);
                             }
-                            if (stage.equals("up") && leftAngle <= 90 && rightAngle <= 90) {
+                            if (stage.equals("up") && leftAngle <= 120 && rightAngle <= 120) {
                                 float angleAverage = (leftAngle + rightAngle) / 2;
                                 Log.d("Left and Right Average:", "Average Value: " + angleAverage);
                                 stage = "down";
@@ -410,6 +413,16 @@ public class SumoSquatActivity extends AppCompatActivity {
         return angle;
     }
 
+    private String classifySquatLevel(double average) {
+        if (average < 90) {
+            return "EXPERT";
+        } else if (average >= 90 && average <= 105){
+            return "INTERMEDIATE";
+        } else {
+            return "BEGINNER";
+        }
+    }
+
     private void saveSquatData() {
         Log.d("SQUAT ANGLE LIST", "Values" + squatAngleList);
         String userId = getUserIdFromPreferences();
@@ -418,9 +431,11 @@ public class SumoSquatActivity extends AppCompatActivity {
         String timeStarted = this.timeStarted;
         String timeEnded = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         double averageAngleDepth = Double.parseDouble(String.format("%.2f", computeAverage(squatAngleList)));
+        String level = classifySquatLevel(averageAngleDepth);
+        Log.d("SQUAT LEVEL", "Value: " + level);
 
         // Create a Squats object with the data
-        Squats squat = new Squats(userId, reps, date, timeStarted, timeEnded, averageAngleDepth);
+        Squats squat = new Squats(userId, reps, date, timeStarted, timeEnded, averageAngleDepth, level);
 
         // Push the data to the database and attach a completion listener
         squatDbRef.push().setValue(squat, new DatabaseReference.CompletionListener() {

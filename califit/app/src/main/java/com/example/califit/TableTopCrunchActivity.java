@@ -288,11 +288,11 @@ public class TableTopCrunchActivity extends AppCompatActivity {
                             Log.d("RightLimb:", "Right Limb:" + rightAngle);
 
                             // Determine stage of tabletop crunch movement
-                            if (leftAngle >= 90 || rightAngle >= 90) {
+                            if (leftAngle > 90 || rightAngle > 90) {
                                 stage = "down";
                                 Log.d("Stage:", "DOWN " + stage);
                             }
-                            if (stage.equals("down") && leftAngle < 90 && rightAngle < 90) {
+                            if (stage.equals("down") && leftAngle <= 90 && rightAngle <= 90) {
                                 float angleAverage = (leftAngle + rightAngle) / 2;
                                 stage = "up";
                                 Log.d("Stage:", "UP " + stage);
@@ -402,6 +402,16 @@ public class TableTopCrunchActivity extends AppCompatActivity {
         return angle;
     }
 
+    private String classifyCrunchLevel(double average) {
+        if (average < 60) {
+            return "EXPERT";
+        } else if (average >= 60 && average <= 75){
+            return "INTERMEDIATE";
+        } else {
+            return "BEGINNER";
+        }
+    }
+
     private void saveCrunchData() {
         Log.d("CRUNCH ANGLE LIST", "Values" + crunchAngleList);
         String userId = getUserIdFromPreferences();
@@ -410,9 +420,11 @@ public class TableTopCrunchActivity extends AppCompatActivity {
         String timeStarted = this.timeStarted;
         String timeEnded = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         double averageAngleDepth = Double.parseDouble(String.format("%.2f", computeAverage(crunchAngleList)));
+        String level = classifyCrunchLevel(averageAngleDepth);
+        Log.d("SQUAT LEVEL", "Value: " + level);
 
         // Create a Squats object with the data
-        Crunches crunch = new Crunches(userId, reps, date, timeStarted, timeEnded, averageAngleDepth);
+        Crunches crunch = new Crunches(userId, reps, date, timeStarted, timeEnded, averageAngleDepth, level);
 
         // Push the data to the database and attach a completion listener
         crunchDbRef.push().setValue(crunch, new DatabaseReference.CompletionListener() {

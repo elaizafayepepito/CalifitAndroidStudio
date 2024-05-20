@@ -300,12 +300,12 @@ public class InclinedPushupActivity extends AppCompatActivity {
                                 counter++;
                                 mediaPlayer.start();
                             }*/
-                            if (leftAngle > 90 && rightAngle > 90) {
+                            if (leftAngle > 120 && rightAngle > 120) {
                                 stage = "up";
                                 Log.d("Stage:", "UP " + stage);
                             }
 
-                            if (stage.equals("up") && leftAngle <= 90 && rightAngle <= 90) {
+                            if (stage.equals("up") && leftAngle <= 120 && rightAngle <= 120) {
                                 float angleAverage = (leftAngle + rightAngle) / 2;
                                 stage = "down";
                                 Log.d("Stage:", "DOWN " + stage);
@@ -414,6 +414,16 @@ public class InclinedPushupActivity extends AppCompatActivity {
         return angle;
     }
 
+    private String classifyPushupLevel(double average) {
+        if (average < 90) {
+            return "EXPERT";
+        } else if (average >= 90 && average <= 100) {
+            return "INTERMEDIATE";
+        } else {
+            return "BEGINNER";
+        }
+    }
+
     private void savePushupData() {
         Log.d("PUSHUP ANGLE LIST", "Values" + pushupAngleList);
         String userId = getUserIdFromPreferences();
@@ -422,9 +432,11 @@ public class InclinedPushupActivity extends AppCompatActivity {
         String timeStarted = this.timeStarted;
         String timeEnded = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         double averageAngleDepth = Double.parseDouble(String.format("%.2f", computeAverage(pushupAngleList)));
+        String level = classifyPushupLevel(averageAngleDepth);
+        Log.d("PUSHUP LEVEL", "Value: " + level);
 
         // Create a Squats object with the data
-        Pushups pushup = new Pushups(userId, reps, date, timeStarted, timeEnded, averageAngleDepth);
+        Pushups pushup = new Pushups(userId, reps, date, timeStarted, timeEnded, averageAngleDepth, level);
 
         // Push the data to the database and attach a completion listener
         pushupDbRef.push().setValue(pushup, new DatabaseReference.CompletionListener() {

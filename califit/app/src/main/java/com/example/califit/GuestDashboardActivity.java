@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,7 +26,7 @@ public class GuestDashboardActivity extends AppCompatActivity {
         crunchDemoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://cebuinstituteoftechnology-my.sharepoint.com/:v:/g/personal/ginalyn_caneda_cit_edu/Eb8KH_U_ZFBEkW_eCsImIUUBEDw_srHsh7AOJgTVyKawHg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=ht9NT0";
+                String url = "https://drive.google.com/file/d/15XBmvu3igicBvT6csGxq6sez2aEOLRg3/view?usp=sharing";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
@@ -38,7 +37,7 @@ public class GuestDashboardActivity extends AppCompatActivity {
         pushupDemoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://cebuinstituteoftechnology-my.sharepoint.com/:v:/g/personal/ginalyn_caneda_cit_edu/ERQm29RtfHpOiFW_HBqR_CABRXCbbD9dm1F9JsrfM7ibaA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=EDyA9O";
+                String url = "https://drive.google.com/file/d/1Mk35brOvqD_QRQpnpUFHkHOmjeMggw3Z/view?usp=sharing";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
@@ -49,7 +48,7 @@ public class GuestDashboardActivity extends AppCompatActivity {
         squatDemoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://cebuinstituteoftechnology-my.sharepoint.com/:v:/g/personal/ginalyn_caneda_cit_edu/ERJ-e9hlKPNArp9yk-cV6RcBwTzfE5cLXwW-KcqOwwdpRw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=xSPIDi";
+                String url = "https://drive.google.com/file/d/1NdczJDFi-7IL9qBhcDtlEOqxFB6-0YEK/view?usp=sharing";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);

@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -35,6 +35,7 @@ public class SsLogAdapter extends RecyclerView.Adapter<SsLogAdapter.SsLogViewHol
         holder.ss_time.setText("Time Started: " + squats.getTimeStarted() + "\nTime Ended: " + squats.getTimeEnded());
         holder.ss_angle.setText(String.valueOf(squats.getAverageAngleDepth()));
         holder.ss_date.setText(squats.getDate());
+        holder.ss_level.setText(squats.getLevel() + " LEVEL");
     }
 
     @Override
@@ -43,7 +44,7 @@ public class SsLogAdapter extends RecyclerView.Adapter<SsLogAdapter.SsLogViewHol
     }
 
     public static class SsLogViewHolder extends RecyclerView.ViewHolder {
-        TextView ss_repetitions, ss_time, ss_angle, ss_date;
+        TextView ss_repetitions, ss_time, ss_angle, ss_date, ss_level;
 
         public SsLogViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,6 +52,7 @@ public class SsLogAdapter extends RecyclerView.Adapter<SsLogAdapter.SsLogViewHol
             ss_time = itemView.findViewById(R.id.ss_time);
             ss_angle = itemView.findViewById(R.id.ss_angle);
             ss_date = itemView.findViewById(R.id.ss_date);
+            ss_level = itemView.findViewById(R.id.ss_level);
         }
     }
 }
