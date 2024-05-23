@@ -94,6 +94,8 @@ public class InclinedPushupActivity extends AppCompatActivity {
     String stage = "";
     boolean isRunning = false;
 
+    boolean initialPositionChecked = false;
+
     MediaPlayer mediaPlayer;
 
     @SuppressLint("MissingInflatedId")
@@ -289,6 +291,72 @@ public class InclinedPushupActivity extends AppCompatActivity {
                             Log.d("LeftArm:", "Left Arm:" + leftAngle);
                             Log.d("RightArm:", "Right Arm:" + rightAngle);
 
+                            //Check Initial Position
+                            PoseLandmark rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP);
+                            PoseLandmark leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP);
+                            PoseLandmark rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE);
+                            PoseLandmark leftKnee = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE);
+                            PoseLandmark rightAnkle = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE);
+                            PoseLandmark leftAnkle = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE);
+
+                            float leftShoulderCheckerAngle = calculateAngle(leftHip, leftShoulder, leftWrist);
+                            float rightShoulderCheckerAngle = calculateAngle(rightHip, rightShoulder, rightWrist);
+                            float leftLegAngle = calculateAngle(leftHip, leftKnee, leftAnkle);
+                            float rightLegAngle = calculateAngle(rightHip, rightKnee, rightAnkle);
+                            float leftBodyStraightness = calculateAngle(leftShoulder, leftHip, leftAnkle);
+                            float rightBodyStraightness = calculateAngle(rightShoulder, rightHip, rightAnkle);
+
+                            Log.d("LeftShoulderCheckerAngle:", "Left BodyShoulderPointAngle:" + leftShoulderCheckerAngle);
+                            Log.d("RightShoulderCheckerAngle:", "Right BodyShoulderPointAngle:" + rightShoulderCheckerAngle);
+                            Log.d("LeftLegAngle:", "Left LegAngle:" + leftLegAngle);
+                            Log.d("RightLegAngle:", "Right LegAngle:" + rightLegAngle);
+                            Log.d("LeftBodyStraightness:", "Left BodyStraightness:" + leftBodyStraightness);
+                            Log.d("RightBodyStraightness:", "Right BodyStraightness:" + rightBodyStraightness);
+
+                            if (!initialPositionChecked) {
+                                if ((leftShoulderCheckerAngle >= 50 && leftShoulderCheckerAngle <= 75) &&
+                                        (rightShoulderCheckerAngle >= 50 && rightShoulderCheckerAngle <= 75) &&
+                                        (leftLegAngle > 130 || rightLegAngle > 130) &&
+                                        (leftBodyStraightness > 140 || rightBodyStraightness > 140)) {
+                                    initialPositionChecked = true; // Update the flag
+                                    Log.d("InitialPosition", "User is in an initial inclined push-up position");
+
+                                    // Start counting push-ups immediately after the initial position is checked
+                                    if (leftAngle > 140 && rightAngle > 140) {
+                                        stage = "up";
+                                        Log.d("Stage:", "UP " + stage);
+                                    }
+                                } else {
+                                    Log.d("InitialPosition", "User is not in an initial inclined push-up position yet");
+                                    // Show a Toast message to guide the user
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "Please ensure you are in an initial inclined push-up position", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            } else {
+                                // Continue counting push-ups if the initial position is already checked
+                                if (stage.equals("up")) {
+                                    if (leftAngle <= 140 && rightAngle <= 140) {
+                                        // Transition from "up" to "down" stage
+                                        float angleAverage = (leftAngle + rightAngle) / 2;
+                                        stage = "down";
+                                        Log.d("Stage:", "DOWN " + stage);
+                                        counter++;
+                                        pushupAngleList.add(angleAverage);
+                                        mediaPlayer.start();
+                                    }
+                                } else if (stage.equals("down")) {
+                                    if (leftAngle > 140 && rightAngle > 140) {
+                                        // Transition from "down" to "up" stage
+                                        stage = "up";
+                                        Log.d("Stage:", "UP " + stage);
+                                    }
+                                }
+                            }
+
                             // Determine stage of push-up movement
                             /*if (leftAngle <= 90 && rightAngle <= 90) {
                                 stage = "down";
@@ -300,7 +368,9 @@ public class InclinedPushupActivity extends AppCompatActivity {
                                 counter++;
                                 mediaPlayer.start();
                             }*/
-                            if (leftAngle > 120 && rightAngle > 120) {
+
+                            //ORIGINAL CODE
+                            /*if (leftAngle > 120 && rightAngle > 120) {
                                 stage = "up";
                                 Log.d("Stage:", "UP " + stage);
                             }
@@ -312,7 +382,7 @@ public class InclinedPushupActivity extends AppCompatActivity {
                                 counter++;
                                 pushupAngleList.add(angleAverage);
                                 mediaPlayer.start();
-                            }
+                            }*/
 
                             Log.d("RepCounter", "Inclined push-up detected. Count: " + counter);
 
@@ -415,9 +485,9 @@ public class InclinedPushupActivity extends AppCompatActivity {
     }
 
     private String classifyPushupLevel(double average) {
-        if (average < 90) {
+        if (average < 125 && average > 45) {
             return "EXPERT";
-        } else if (average >= 90 && average <= 100) {
+        } else if (average >= 125 && average <= 135) {
             return "INTERMEDIATE";
         } else {
             return "BEGINNER";
