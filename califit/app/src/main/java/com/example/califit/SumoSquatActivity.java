@@ -481,7 +481,7 @@ public class SumoSquatActivity extends AppCompatActivity {
     }
 
     private String classifySquatLevel(double average) {
-        if (average < 90) {
+        if (average < 90 && average != 0) {
             return "EXPERT";
         } else if (average >= 90 && average <= 105){
             return "INTERMEDIATE";
