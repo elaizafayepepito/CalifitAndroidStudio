@@ -93,6 +93,8 @@ public class TableTopCrunchActivity extends AppCompatActivity {
     String stage = "";
     boolean isRunning = false;
 
+    boolean initialPositionChecked = false;
+
     MediaPlayer mediaPlayer;
 
     @ExperimentalGetImage
@@ -281,14 +283,76 @@ public class TableTopCrunchActivity extends AppCompatActivity {
                             PoseLandmark rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP);
                             PoseLandmark rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE);
 
-                            // Calculate angles
-                            float leftAngle = calculateAngle(leftShoulder, leftHip, leftKnee);
-                            float rightAngle = calculateAngle(rightShoulder, rightHip, rightKnee);
-                            Log.d("LeftLimb:", "Left Limb:" + leftAngle);
-                            Log.d("RightLimb:", "Right Limb:" + rightAngle);
+                            //Check Initial Position
+                            PoseLandmark rightAnkle = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE);
+                            PoseLandmark leftAnkle = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE);
 
-                            // Determine stage of tabletop crunch movement
-                            if (leftAngle > 90 || rightAngle > 90) {
+                            // Calculate angles
+                            float leftKneeCheckerAngle = calculateAngle(leftAnkle, leftKnee, leftHip);
+                            float rightKneeCheckerAngle = calculateAngle(rightAnkle, rightKnee, rightHip);
+
+                            float leftBodyDifference = Math.abs(leftHip.getPosition().y - leftShoulder.getPosition().y);
+                            float rightBodyDifference = Math.abs(rightHip.getPosition().y - rightShoulder.getPosition().y);
+
+                            // Define threshold for y position difference
+                            float bodyYThreshold = 20.0f; // Adjust as necessary
+
+                            float leftHipAngle = calculateAngle(leftShoulder, leftHip, leftKnee);
+                            float rightHipAngle = calculateAngle(rightShoulder, rightHip, rightKnee);
+                            Log.d("LeftHip:", "Left Hip:" + leftHipAngle);
+                            Log.d("RightHip:", "Right Hip:" + rightHipAngle);
+
+                            Log.d("LeftKneeCheckerAngle:", "Left KneeCheckerAngle:" + leftKneeCheckerAngle);
+                            Log.d("RightKneeCheckerAngle:", "Right KneeCheckerAngle:" + rightKneeCheckerAngle);
+                            Log.d("LeftHipAngle:", "Left HipAngle:" + leftHipAngle);
+                            Log.d("RightHipAngle:", "Right HipAngle:" + rightHipAngle);
+                            Log.d("LeftShoulderY:", "LeftShoulder Y:" + leftShoulder.getPosition().y);
+                            Log.d("leftHipY:", "leftHip y:" + leftHip.getPosition().y);
+                            Log.d("RightShoulderY:", "RightShoulder Y:" + rightShoulder.getPosition().y);
+                            Log.d("RightHipY:", "RightHip y:" + rightHip.getPosition().y);
+
+                            if (!initialPositionChecked) {
+                                if ((leftKneeCheckerAngle >= 70 && leftKneeCheckerAngle <= 110) &&
+                                        (rightKneeCheckerAngle >= 70 && rightKneeCheckerAngle <= 110) &&
+                                        (leftHipAngle >= 70 && leftHipAngle <= 110) &&
+                                        (rightHipAngle >= 70 && rightHipAngle <= 110) &&
+                                        (leftBodyDifference <= bodyYThreshold) ||  (rightBodyDifference <= bodyYThreshold)) {
+                                    initialPositionChecked = true; // Update the flag
+                                    Log.d("InitialPosition", "User is in an initial tabletop crunch position");
+
+                                    // Start counting push-ups immediately after the initial position is checked
+                                    if (leftHipAngle > 90 || rightHipAngle > 90) {
+                                        stage = "up";
+                                        Log.d("Stage:", "UP " + stage);
+                                    }
+                                } else {
+                                    Log.d("InitialPosition", "User is not in an initial tabletop crunch position yet");
+                                    // Show a Toast message to guide the user
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "Please ensure you are in an initial tabletop crunch position", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            } else {
+                                // Continue counting push-ups if the initial position is already checked
+                                if (leftHipAngle > 90 || rightHipAngle > 90) {
+                                    stage = "down";
+                                    Log.d("Stage:", "DOWN " + stage);
+                                }
+                                if (stage.equals("down") && leftHipAngle <= 90 && rightHipAngle <= 90) {
+                                    float angleAverage = (leftHipAngle + rightHipAngle) / 2;
+                                    stage = "up";
+                                    Log.d("Stage:", "UP " + stage);
+                                    counter++;
+                                    crunchAngleList.add(angleAverage);
+                                    mediaPlayer.start();
+                                }
+                            }
+
+                            // Determine stage of tabletop crunch movement ---- ORIGINAL CODE
+                            /*if (leftAngle > 90 || rightAngle > 90) {
                                 stage = "down";
                                 Log.d("Stage:", "DOWN " + stage);
                             }
@@ -299,7 +363,7 @@ public class TableTopCrunchActivity extends AppCompatActivity {
                                 counter++;
                                 crunchAngleList.add(angleAverage);
                                 mediaPlayer.start();
-                            }
+                            }*/
 
                             Log.d("RepCounter", "Tabletop Crunch detected. Count: " + counter);
 
@@ -403,9 +467,9 @@ public class TableTopCrunchActivity extends AppCompatActivity {
     }
 
     private String classifyCrunchLevel(double average) {
-        if (average < 60) {
+        if (average < 60 && average != 0) {
             return "EXPERT";
-        } else if (average >= 60 && average <= 75){
+        } else if (average >= 60 && average <= 80){
             return "INTERMEDIATE";
         } else {
             return "BEGINNER";
@@ -421,7 +485,7 @@ public class TableTopCrunchActivity extends AppCompatActivity {
         String timeEnded = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         double averageAngleDepth = Double.parseDouble(String.format("%.2f", computeAverage(crunchAngleList)));
         String level = classifyCrunchLevel(averageAngleDepth);
-        Log.d("SQUAT LEVEL", "Value: " + level);
+        Log.d("TABLETOP CRUNCH LEVEL", "Value: " + level);
 
         // Create a Squats object with the data
         Crunches crunch = new Crunches(userId, reps, date, timeStarted, timeEnded, averageAngleDepth, level);
@@ -437,7 +501,7 @@ public class TableTopCrunchActivity extends AppCompatActivity {
                     // Data inserted successfully, get the key assigned to the newly added pushup data
                     String pushupKey = databaseReference.getKey();
                     backToDashboard();
-                    Toast.makeText(TableTopCrunchActivity.this, "Pushup data saved successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TableTopCrunchActivity.this, "Tabletop crunch data saved successfully!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

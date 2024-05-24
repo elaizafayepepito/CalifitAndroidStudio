@@ -290,8 +290,7 @@ public class SumoSquatActivity extends AppCompatActivity {
                             float ankleYThreshold = 20.0f; // Adjust as necessary
 
                             // Ensure legs are equidistant from each other
-                            float legDistanceDifference = Math.abs(leftHip.getPosition().x - rightHip.getPosition().x);
-
+                            float legDistanceDifference = Math.abs(leftKnee.getPosition().x - rightKnee.getPosition().x);
 
                             // Calculate angles
                             float leftAngle = calculateAngle(leftHip, leftKnee, leftAnkle);
