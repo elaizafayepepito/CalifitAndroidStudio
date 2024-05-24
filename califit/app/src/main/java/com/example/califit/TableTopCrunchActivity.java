@@ -93,7 +93,7 @@ public class TableTopCrunchActivity extends AppCompatActivity {
     String stage = "";
     boolean isRunning = false;
 
-    boolean initialPositionChecked = false;
+    boolean positionChecked = false;
 
     MediaPlayer mediaPlayer;
 
@@ -295,7 +295,7 @@ public class TableTopCrunchActivity extends AppCompatActivity {
                             float rightBodyDifference = Math.abs(rightHip.getPosition().y - rightShoulder.getPosition().y);
 
                             // Define threshold for y position difference
-                            float bodyYThreshold = 20.0f; // Adjust as necessary
+                            float bodyYThreshold = 15.0f; // Adjust as necessary
 
                             float leftHipAngle = calculateAngle(leftShoulder, leftHip, leftKnee);
                             float rightHipAngle = calculateAngle(rightShoulder, rightHip, rightKnee);
@@ -310,38 +310,41 @@ public class TableTopCrunchActivity extends AppCompatActivity {
                             Log.d("leftHipY:", "leftHip y:" + leftHip.getPosition().y);
                             Log.d("RightShoulderY:", "RightShoulder Y:" + rightShoulder.getPosition().y);
                             Log.d("RightHipY:", "RightHip y:" + rightHip.getPosition().y);
+                            Log.d("LeftBodyDifference:", "LeftHipToLeftShoulder:" + leftBodyDifference);
+                            Log.d("RightBodyDifference:", "RightHipToRightShoulder:" + rightBodyDifference);
 
-                            if (!initialPositionChecked) {
-                                if ((leftKneeCheckerAngle >= 70 && leftKneeCheckerAngle <= 110) &&
-                                        (rightKneeCheckerAngle >= 70 && rightKneeCheckerAngle <= 110) &&
-                                        (leftHipAngle >= 70 && leftHipAngle <= 110) &&
-                                        (rightHipAngle >= 70 && rightHipAngle <= 110) &&
+                            if (!positionChecked) {
+                                if ((leftKneeCheckerAngle >= 80 && leftKneeCheckerAngle <= 110) &&
+                                        (rightKneeCheckerAngle >= 80 && rightKneeCheckerAngle <= 110) &&
+                                        (leftHipAngle >= 80 && leftHipAngle <= 110) &&
+                                        (rightHipAngle >= 80 && rightHipAngle <= 110) &&
                                         (leftBodyDifference <= bodyYThreshold) ||  (rightBodyDifference <= bodyYThreshold)) {
-                                    initialPositionChecked = true; // Update the flag
-                                    Log.d("InitialPosition", "User is in an initial tabletop crunch position");
+                                    positionChecked = true; // Update the flag
+                                    Log.d("CrunchPosition", "User is in a tabletop crunch position");
 
-                                    // Start counting push-ups immediately after the initial position is checked
+                                    // Start counting crunch immediately after the position is checked
                                     if (leftHipAngle > 90 || rightHipAngle > 90) {
                                         stage = "up";
                                         Log.d("Stage:", "UP " + stage);
                                     }
                                 } else {
-                                    Log.d("InitialPosition", "User is not in an initial tabletop crunch position yet");
+                                    Log.d("CrunchPosition", "User is not in a tabletop crunch position yet");
                                     // Show a Toast message to guide the user
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(getApplicationContext(), "Please ensure you are in an initial tabletop crunch position", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(TableTopCrunchActivity.this, "Please ensure you are in an initial tabletop crunch position", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
                             } else {
-                                // Continue counting push-ups if the initial position is already checked
-                                if (leftHipAngle > 90 || rightHipAngle > 90) {
+                                // Continue counting crunch if the position is already checked
+                                //if ((leftBodyDifference > bodyYThreshold) ||  (rightBodyDifference > bodyYThreshold))
+                                if (leftHipAngle >= 90 || rightHipAngle >= 90) {
                                     stage = "down";
                                     Log.d("Stage:", "DOWN " + stage);
                                 }
-                                if (stage.equals("down") && leftHipAngle <= 90 && rightHipAngle <= 90) {
+                                if (stage.equals("down") && leftHipAngle < 90 && rightHipAngle < 90) {
                                     float angleAverage = (leftHipAngle + rightHipAngle) / 2;
                                     stage = "up";
                                     Log.d("Stage:", "UP " + stage);

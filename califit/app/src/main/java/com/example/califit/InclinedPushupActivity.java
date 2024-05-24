@@ -94,7 +94,7 @@ public class InclinedPushupActivity extends AppCompatActivity {
     String stage = "";
     boolean isRunning = false;
 
-    boolean initialPositionChecked = false;
+    boolean positionChecked = false;
 
     MediaPlayer mediaPlayer;
 
@@ -313,13 +313,13 @@ public class InclinedPushupActivity extends AppCompatActivity {
                             Log.d("LeftBodyStraightness:", "Left BodyStraightness:" + leftBodyStraightness);
                             Log.d("RightBodyStraightness:", "Right BodyStraightness:" + rightBodyStraightness);
 
-                            if (!initialPositionChecked) {
+                            if (!positionChecked) {
                                 if ((leftShoulderCheckerAngle >= 50 && leftShoulderCheckerAngle <= 75) &&
                                         (rightShoulderCheckerAngle >= 50 && rightShoulderCheckerAngle <= 75) &&
                                         (leftLegAngle > 130 || rightLegAngle > 130) &&
                                         (leftBodyStraightness > 140 || rightBodyStraightness > 140)) {
-                                    initialPositionChecked = true; // Update the flag
-                                    Log.d("InitialPosition", "User is in an initial inclined push-up position");
+                                    positionChecked = true; // Update the flag
+                                    Log.d("PushupPosition", "User is in an inclined push-up position");
 
                                     // Start counting push-ups immediately after the initial position is checked
                                     if (leftAngle > 140 && rightAngle > 140) {
@@ -327,12 +327,12 @@ public class InclinedPushupActivity extends AppCompatActivity {
                                         Log.d("Stage:", "UP " + stage);
                                     }
                                 } else {
-                                    Log.d("InitialPosition", "User is not in an initial inclined push-up position yet");
+                                    Log.d("InitialPosition", "User is not in an inclined push-up position yet");
                                     // Show a Toast message to guide the user
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(getApplicationContext(), "Please ensure you are in an initial inclined push-up position", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(InclinedPushupActivity.this, "Please ensure you are in an initial inclined push-up position", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
@@ -485,7 +485,7 @@ public class InclinedPushupActivity extends AppCompatActivity {
     }
 
     private String classifyPushupLevel(double average) {
-        if (average < 125 && average > 45) {
+        if (average < 125 && average >= 45) {
             return "EXPERT";
         } else if (average >= 125 && average <= 135) {
             return "INTERMEDIATE";

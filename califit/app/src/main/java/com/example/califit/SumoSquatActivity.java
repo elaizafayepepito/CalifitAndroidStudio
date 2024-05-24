@@ -91,7 +91,7 @@ public class SumoSquatActivity extends AppCompatActivity {
     String stage = "";
     boolean isRunning = false;
 
-    boolean initialPositionChecked = false;
+    boolean positionChecked = false;
 
     MediaPlayer mediaPlayer;
 
@@ -307,31 +307,31 @@ public class SumoSquatActivity extends AppCompatActivity {
                             Log.d("ankleYThreshold:", "AnkleYThreshold:" + ankleYThreshold);
                             Log.d("legDistanceDifference:", "LegDistanceDifference:" + legDistanceDifference);
 
-                            if (!initialPositionChecked) {
+                            if (!positionChecked) {
                                 if ((leftBodyHipPointAngle >= 145 && leftBodyHipPointAngle <= 170) &&
                                         (rightBodyHipPointAngle >= 145 && rightBodyHipPointAngle <= 170) &&
                                         ankleYDifference <= ankleYThreshold &&
                                         legDistanceDifference >= 30 && legDistanceDifference <= 60) { // Adjust as necessary
-                                    initialPositionChecked = true; // Update the flag
-                                    Log.d("InitialPosition", "User is in an initial sumo squat position");
+                                    positionChecked = true; // Update the flag
+                                    Log.d("SquatPosition", "User is in a sumo squat position");
 
-                                    // Start counting push-ups immediately after the initial position is checked
+                                    // Start counting squats immediately after the squat position is checked
                                     if (leftAngle > 120 && rightAngle > 120) {
                                         stage = "up";
                                         Log.d("Stage:", "UP " + stage);
                                     }
                                 } else {
-                                    Log.d("InitialPosition", "User is not in an sumo squat push-up position yet");
+                                    Log.d("SquatPosition", "User is not in a sumo squat push-up position yet");
                                     // Show a Toast message to guide the user
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(getApplicationContext(), "Please ensure you are in an initial sumo squat position", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(SumoSquatActivity.this, "Please ensure you are in a sumo squat position", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
                             } else {
-                                // Continue counting push-ups if the initial position is already checked
+                                // Continue counting squats if the position is already checked
                                 if (leftAngle > 120 && rightAngle > 120) {
                                     stage = "up";
                                     Log.d("Stage:", "UP " + stage);
