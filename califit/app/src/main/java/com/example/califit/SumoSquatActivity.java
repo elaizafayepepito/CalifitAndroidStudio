@@ -91,6 +91,8 @@ public class SumoSquatActivity extends AppCompatActivity {
     String stage = "";
     boolean isRunning = false;
 
+    boolean initialPositionChecked = false;
+
     MediaPlayer mediaPlayer;
 
     @ExperimentalGetImage
@@ -278,11 +280,74 @@ public class SumoSquatActivity extends AppCompatActivity {
                             PoseLandmark rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE);
                             PoseLandmark rightAnkle = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE);
 
+                            //Checker
+                            PoseLandmark rightShoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER);
+                            PoseLandmark leftShoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER);
+                            // Calculate y position difference between ankles
+                            float ankleYDifference = Math.abs(leftAnkle.getPosition().y - rightAnkle.getPosition().y);
+
+                            // Define threshold for y position difference
+                            float ankleYThreshold = 20.0f; // Adjust as necessary
+
+                            // Ensure legs are equidistant from each other
+                            float legDistanceDifference = Math.abs(leftHip.getPosition().x - rightHip.getPosition().x);
+
+
                             // Calculate angles
                             float leftAngle = calculateAngle(leftHip, leftKnee, leftAnkle);
                             float rightAngle = calculateAngle(rightHip, rightKnee, rightAnkle);
                             Log.d("LeftKnee:", "Left Knee:" + leftAngle);
                             Log.d("RightKnee:", "Right Knee:" + rightAngle);
+
+                            float leftBodyHipPointAngle = calculateAngle(leftKnee, leftHip, leftShoulder);
+                            float rightBodyHipPointAngle = calculateAngle(rightKnee, rightHip, rightShoulder);
+
+                            Log.d("LeftBodyHipPointAngle:", "Left BodyHipPointAngle:" + leftBodyHipPointAngle);
+                            Log.d("RightBodyHipPointAngle:", "Right BodyHipPointAngle:" + rightBodyHipPointAngle);
+                            Log.d("ankleYDifference:", "AnkleYDifference:" + ankleYDifference);
+                            Log.d("ankleYThreshold:", "AnkleYThreshold:" + ankleYThreshold);
+                            Log.d("legDistanceDifference:", "LegDistanceDifference:" + legDistanceDifference);
+
+                            if (!initialPositionChecked) {
+                                if ((leftBodyHipPointAngle >= 145 && leftBodyHipPointAngle <= 170) &&
+                                        (rightBodyHipPointAngle >= 145 && rightBodyHipPointAngle <= 170) &&
+                                        ankleYDifference <= ankleYThreshold &&
+                                        legDistanceDifference >= 30 && legDistanceDifference <= 60) { // Adjust as necessary
+                                    initialPositionChecked = true; // Update the flag
+                                    Log.d("InitialPosition", "User is in an initial sumo squat position");
+
+                                    // Start counting push-ups immediately after the initial position is checked
+                                    if (leftAngle > 120 && rightAngle > 120) {
+                                        stage = "up";
+                                        Log.d("Stage:", "UP " + stage);
+                                    }
+                                } else {
+                                    Log.d("InitialPosition", "User is not in an sumo squat push-up position yet");
+                                    // Show a Toast message to guide the user
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "Please ensure you are in an initial sumo squat position", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            } else {
+                                // Continue counting push-ups if the initial position is already checked
+                                if (leftAngle > 120 && rightAngle > 120) {
+                                    stage = "up";
+                                    Log.d("Stage:", "UP " + stage);
+                                }
+                                if (stage.equals("up") && leftAngle <= 120 && rightAngle <= 120) {
+                                    float angleAverage = (leftAngle + rightAngle) / 2;
+                                    Log.d("Left and Right Average:", "Average Value: " + angleAverage);
+                                    stage = "down";
+                                    Log.d("Stage:", "DOWN " + stage);
+                                    counter++;
+                                    squatAngleList.add(angleAverage);
+                                    mediaPlayer.start();
+                                }
+                            }
+
 
                             // Determine stage of squat movement -- comment
                             /*if (leftAngle <= 160 && rightAngle <= 160) {
@@ -299,7 +364,9 @@ public class SumoSquatActivity extends AppCompatActivity {
                                 mediaPlayer.start();
                             }*/
 
-                            if (leftAngle > 120 && rightAngle > 120) {
+                            //ORIGINAL CODE
+
+                            /*if (leftAngle > 120 && rightAngle > 120) {
                                 stage = "up";
                                 Log.d("Stage:", "UP " + stage);
                             }
@@ -311,7 +378,7 @@ public class SumoSquatActivity extends AppCompatActivity {
                                 counter++;
                                 squatAngleList.add(angleAverage);
                                 mediaPlayer.start();
-                            }
+                            }*/
 
                             Log.d("RepCounter", "Sumo squat detected. Count: " + counter);
 
