@@ -333,7 +333,7 @@ public class TableTopCrunchActivity extends AppCompatActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(TableTopCrunchActivity.this, "Please ensure you are in an initial tabletop crunch position", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(TableTopCrunchActivity.this, "Please ensure you are in a tabletop crunch position", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }

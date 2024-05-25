@@ -332,7 +332,7 @@ public class InclinedPushupActivity extends AppCompatActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(InclinedPushupActivity.this, "Please ensure you are in an initial inclined push-up position", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(InclinedPushupActivity.this, "Please ensure you are in an inclined push-up position", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
