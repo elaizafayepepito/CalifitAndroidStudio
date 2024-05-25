@@ -323,7 +323,7 @@ public class TableTopCrunchActivity extends AppCompatActivity {
                                     Log.d("CrunchPosition", "User is in a tabletop crunch position");
 
                                     // Start counting crunch immediately after the position is checked
-                                    if (leftHipAngle > 90 || rightHipAngle > 90) {
+                                    if (leftHipAngle > 85 || rightHipAngle > 85) {
                                         stage = "up";
                                         Log.d("Stage:", "UP " + stage);
                                     }
@@ -340,11 +340,11 @@ public class TableTopCrunchActivity extends AppCompatActivity {
                             } else {
                                 // Continue counting crunch if the position is already checked
                                 //if ((leftBodyDifference > bodyYThreshold) ||  (rightBodyDifference > bodyYThreshold))
-                                if (leftHipAngle >= 90 || rightHipAngle >= 90) {
+                                if (leftHipAngle >= 85 || rightHipAngle >= 85) {
                                     stage = "down";
                                     Log.d("Stage:", "DOWN " + stage);
                                 }
-                                if (stage.equals("down") && leftHipAngle < 90 && rightHipAngle < 90) {
+                                if (stage.equals("down") && leftHipAngle < 85 && rightHipAngle < 85) {
                                     float angleAverage = (leftHipAngle + rightHipAngle) / 2;
                                     stage = "up";
                                     Log.d("Stage:", "UP " + stage);
